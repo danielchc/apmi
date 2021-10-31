@@ -2,7 +2,9 @@ SRC_DIR := src
 OBJ_DIR := obj
 BIN_DIR := bin
 
-LEX_FILE := src/lex.yy.c
+LEX_FILE := ./src/lex.yy.c
+TAB_FILE := ./src/y.tab.c
+TAB_HEADER:= ./src/y.tab.h
 
 
 EXE := $(BIN_DIR)/apmi
@@ -17,10 +19,12 @@ LDLIBS   := -lm
 
 
 
-all: lex $(EXE) 
+all: lex bison $(EXE) 
 
 lex:
-	flex -o $(LEX_FILE) src/python.l
+	flex -o $(LEX_FILE) ./src/grammar.l
+bison:
+	bison -dy -o $(TAB_FILE) ./src/calc.y && mv $(TAB_HEADER) include
 
 $(EXE): $(OBJ) | $(BIN_DIR)
 	$(CC) $^ $(LDLIBS) -o $@

@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
-#include "lexical_analyzer.h"
 
 //Tipos de erros recoñecidos
 typedef enum{

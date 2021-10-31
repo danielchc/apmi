@@ -7,10 +7,15 @@
 #ifndef HASHTABLE_H
 #include "hashtable.h"
 #endif
-#ifndef LEXICAL_ANALYZER_H
-#include "lexical_analyzer.h"
-#endif
 
+
+#define KEYWORDSIZE 200
+
+//Estructura dun compoñente léxico
+typedef struct{
+	char	keyword[KEYWORDSIZE];
+	uint   	value;
+}lexcomp_t;
 
 /*
 	 Establezco o tamaño incial do hashmap, idealmente un hashmap 

@@ -1,16 +1,27 @@
 %{
+    #include "ts.h"
     #include <stdio.h>
     #include <stdlib.h>
     void yyerror(char *);
     int yylex(void);
-
-    int sym[26];
 %}
 
-%token INTEGER VARIABLE
+%token ID
+%token NUMBER
 %left '+' '-'
 %left '*' '/'
 %nonassoc UMINUS
+
+
+
+
+%union{
+    char* str;
+    double num;
+}
+
+%type <num> expression  
+%type <str> statement  
 
 %%
 
@@ -20,22 +31,29 @@ program:
         ;
 
 statement:
-        expression                      { printf("%d\n", $1); }
-        | VARIABLE '=' expression       { sym[$1] = $3; }
-        ;
+        expression                      { printf("%f\n", $1); }
+        | ID '=' expression       { 
+            //save_lexcomp($1.str,ID,$3);
+             //printf("COSA: %s\n",$1);
+        };
 
 expression:
-        INTEGER                         /* default action { $$ = $1; }*/
-        | VARIABLE                      { $$ = sym[$1]; }
+        NUMBER                         /* default action { $$ = $1; }*/
+        | ID                           {
+            $$=3.0f;
+        }
         | expression '+' expression     { $$ = $1 + $3; }
         | expression '-' expression     { $$ = $1 - $3; }
         | expression '*' expression     { $$ = $1 * $3; }
-        | expression '/' expression {
+        | expression '/' expression     {
             if ($3 == 0) {
-                yyerror ("can not be divideed by zero"); exit(0);
+                yyerror ("Non se pode dividir entre 0"); exit(0);
             }
-            else
-                $$ = $1 / $3; }
+            else{
+                $$ = $1 / $3; 
+            }
+                
+        }
         | '-' expression %prec UMINUS   { $$ = -$2;}
         | '(' expression ')'            { $$ = $2; }
         ;
@@ -43,5 +61,5 @@ expression:
 %%
 
 void yyerror(char *s) {
-    fprintf(stderr, "%s\n", s);
+    fprintf(stderr, "Pocho %s\n", s);
 }

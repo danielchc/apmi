@@ -158,7 +158,7 @@ int resize_hash_table(hash_table_t* hash_table){
 		se todo vai ben, devolve un punteiro a rexistro creado/actualizado
 		se hai erro devolve NULL
 */
-record_t* set_value(char* key, ht_value_t value, hash_table_t* hash_table){
+record_t* set_value(char* key, ht_value_t value, float attr_value, hash_table_t* hash_table){
 	if(!key || !hash_table)return NULL;
 
 	//Calcula o hash da clave
@@ -189,7 +189,7 @@ record_t* set_value(char* key, ht_value_t value, hash_table_t* hash_table){
 
 		//Engade o novo rexistro a lista enlazada
 		record_t* new_record = NULL;
-		if(!(new_record = add_front(key, value, &(hash_table->lists[table_index]))))return NULL;
+		if(!(new_record = add_front(key, value,attr_value, &(hash_table->lists[table_index]))))return NULL;
 		
 		//Actualiza o número de items e devolve o novo rexistro
 		hash_table->num_records++;
@@ -198,6 +198,7 @@ record_t* set_value(char* key, ht_value_t value, hash_table_t* hash_table){
 	}else{
 		//Se xa existe a clave reemplaza o valor
 		(*link_ptr)->value = value;
+		(*link_ptr)->attr_value = attr_value;
 		return *link_ptr;
 	}
 }
@@ -216,7 +217,7 @@ record_t* set_value(char* key, ht_value_t value, hash_table_t* hash_table){
 		se a clave non existe -1
 		se a hashtable non existe -2
 */
-int get_value(char* key, hash_table_t* hash_table,ht_value_t* value){
+int get_value(char* key, hash_table_t* hash_table,ht_value_t* value,float* attrValue){
 	//Se non existe a táboa da err
 	if(!key || !hash_table) return -2;
 	ht_size_t table_index = hash_function(key)%(hash_table->table_size);
@@ -227,8 +228,11 @@ int get_value(char* key, hash_table_t* hash_table,ht_value_t* value){
 	}
 	if(!link) return -1;
 	(*value)=link->value;
+	(*attrValue)=link->attr_value;
 	return 0;
 }
+
+
 
 /*
 	remove_record

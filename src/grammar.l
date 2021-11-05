@@ -1,22 +1,28 @@
 
+%option noyywrap
 %{
     #include "y.tab.h"
-    #include "y.tab.h"
+    #include "ts.h"
     #include <stdlib.h>
     void yyerror(char *);
 %}
-
+digit                       ([0-9]_?)+
+exp                         [eE][+-]?{digit}+
+integer                     {digit}{exp}?
+decimal                     ({digit})*\.({digit}){exp}?
 %%
 
-[a-z]       {
-                yylval = *yytext - 'a';
-                return VARIABLE;
-                }
-
-[0-9]+      {
-                yylval = atoi(yytext);
-                return INTEGER;
+{decimal}|{integer}   {  
+                yylval.num = atof(yytext);
+                return NUMBER;
             }
+
+[a-z]+      {
+                yylval.str=strdup(yytext);
+                return ID;
+            };
+
+
 
 [-+()=/*]     	{ return *yytext; }
 
@@ -27,7 +33,3 @@
 .               yyerror("Unknown character");
 
 %%
-
-int yywrap(void) {
-    return 1;
-}

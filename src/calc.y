@@ -22,6 +22,7 @@
 %union{
     char* str;
     double num;
+    ts_record_t* record;
 }
 %token ID
 %token NUMBER
@@ -29,7 +30,7 @@
 
 
 %type <num> expression  
-%type <str> statement  
+/* %type <record> statement   */
 
 %%
 
@@ -46,6 +47,7 @@ statement:
         | ID '=' expression       { 
             //save_lexcomp($1.str,ID,$3);
              //printf("COSA: %s\n",$1);
+            ($1)->attr_value=$3;
             prompt();
             YYERROR;
         };

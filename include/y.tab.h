@@ -66,8 +66,9 @@ union YYSTYPE
 
     char* str;
     double num;
+    ts_record_t* record;
 
-#line 71 "./src/y.tab.h" /* yacc.c:1909  */
+#line 72 "./src/y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

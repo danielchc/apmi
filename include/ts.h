@@ -14,6 +14,8 @@ typedef struct{
 	uint   	value;
 }lexcomp_t;
 
+typedef record_t ts_record_t;
+
 /*
 	 Establezco o tamaño incial do hashmap, idealmente un hashmap 
 	 funciona mellor con números primos, como nun inicio hai 35 palabras reservadas, o tamaño 

@@ -479,8 +479,8 @@ char *yytext;
 #line 1 "./src/grammar.l"
 #define YY_NO_INPUT 1
 #line 5 "./src/grammar.l"
-    #include "y.tab.h"
     #include "ts.h"
+    #include "y.tab.h"
     #include <stdlib.h>
     void yyerror(char *);
 #line 487 "./src/lex.yy.c"
@@ -778,41 +778,40 @@ case 3:
 YY_RULE_SETUP
 #line 32 "./src/grammar.l"
 {
-                NULL;
                 yylval.str=strdup(yytext);
                 
-                record_t *record=get_lexcomp(yytext);
-                printf("DIR %p\n",record);
+                ts_record_t *record;
+                record=get_lexcomp(yytext);
                 return (record->value);
             };
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 43 "./src/grammar.l"
+#line 42 "./src/grammar.l"
 { return *yytext; }
 	YY_BREAK
 case 5:
 /* rule 5 can match eol */
 YY_RULE_SETUP
-#line 45 "./src/grammar.l"
+#line 44 "./src/grammar.l"
 { return *yytext;  }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 47 "./src/grammar.l"
+#line 46 "./src/grammar.l"
 ;       /* skip whitespace */
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 49 "./src/grammar.l"
+#line 48 "./src/grammar.l"
 yyerror("Unknown character");
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 51 "./src/grammar.l"
+#line 50 "./src/grammar.l"
 ECHO;
 	YY_BREAK
-#line 816 "./src/lex.yy.c"
+#line 815 "./src/lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1776,7 +1775,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 51 "./src/grammar.l"
+#line 50 "./src/grammar.l"
 
 
 

@@ -35,8 +35,8 @@ int delete_ts(){
 }
 
 
-record_t* get_lexcomp(char *lexcomp){
-	record_t *record=malloc(sizeof(record_t));
+ts_record_t* get_lexcomp(char *lexcomp){
+	ts_record_t *record=malloc(sizeof(record_t));
 	record=get_record(lexcomp,*ts);
 	if(!record){
 		return set_value(lexcomp,ID,*ts);

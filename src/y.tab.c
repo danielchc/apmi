@@ -129,8 +129,9 @@ union YYSTYPE
 
     char* str;
     double num;
+    ts_record_t* record;
 
-#line 134 "./src/y.tab.c" /* yacc.c:355  */
+#line 135 "./src/y.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -147,7 +148,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 151 "./src/y.tab.c" /* yacc.c:358  */
+#line 152 "./src/y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -445,8 +446,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    37,    37,    38,    42,    46,    54,    55,    58,    59,
-      60,    61,    62,    71,    72
+       0,    38,    38,    39,    43,    47,    55,    56,    59,    60,
+      61,    62,    63,    72,    73
 };
 #endif
 
@@ -1230,59 +1231,59 @@ yyreduce:
   switch (yyn)
     {
         case 4:
-#line 42 "./src/calc.y" /* yacc.c:1646  */
+#line 43 "./src/calc.y" /* yacc.c:1646  */
     { 
             printf(">>> %f\n", (yyvsp[0].num));
             prompt();
         }
-#line 1239 "./src/y.tab.c" /* yacc.c:1646  */
+#line 1240 "./src/y.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 46 "./src/calc.y" /* yacc.c:1646  */
+#line 47 "./src/calc.y" /* yacc.c:1646  */
     { 
             //save_lexcomp($1.str,ID,$3);
              //printf("COSA: %s\n",$1);
             prompt();
             YYERROR;
         }
-#line 1250 "./src/y.tab.c" /* yacc.c:1646  */
+#line 1251 "./src/y.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 55 "./src/calc.y" /* yacc.c:1646  */
+#line 56 "./src/calc.y" /* yacc.c:1646  */
     {
             (yyval.num)=3.0f;
         }
-#line 1258 "./src/y.tab.c" /* yacc.c:1646  */
+#line 1259 "./src/y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 58 "./src/calc.y" /* yacc.c:1646  */
+#line 59 "./src/calc.y" /* yacc.c:1646  */
     { (yyval.num) = (yyvsp[-2].num) + (yyvsp[0].num); }
-#line 1264 "./src/y.tab.c" /* yacc.c:1646  */
+#line 1265 "./src/y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 59 "./src/calc.y" /* yacc.c:1646  */
+#line 60 "./src/calc.y" /* yacc.c:1646  */
     { (yyval.num) = (yyvsp[-2].num) - (yyvsp[0].num); }
-#line 1270 "./src/y.tab.c" /* yacc.c:1646  */
+#line 1271 "./src/y.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 60 "./src/calc.y" /* yacc.c:1646  */
+#line 61 "./src/calc.y" /* yacc.c:1646  */
     { (yyval.num) = (yyvsp[-2].num) * (yyvsp[0].num); }
-#line 1276 "./src/y.tab.c" /* yacc.c:1646  */
+#line 1277 "./src/y.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 61 "./src/calc.y" /* yacc.c:1646  */
+#line 62 "./src/calc.y" /* yacc.c:1646  */
     { (yyval.num) = pow((yyvsp[-2].num),(yyvsp[0].num)); }
-#line 1282 "./src/y.tab.c" /* yacc.c:1646  */
+#line 1283 "./src/y.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 62 "./src/calc.y" /* yacc.c:1646  */
+#line 63 "./src/calc.y" /* yacc.c:1646  */
     {
             if ((yyvsp[0].num) == 0) {
                 yyerror("Non se pode dividir entre 0");
@@ -1292,23 +1293,23 @@ yyreduce:
             }
                 
         }
-#line 1296 "./src/y.tab.c" /* yacc.c:1646  */
+#line 1297 "./src/y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 71 "./src/calc.y" /* yacc.c:1646  */
+#line 72 "./src/calc.y" /* yacc.c:1646  */
     { (yyval.num) = -(yyvsp[0].num);}
-#line 1302 "./src/y.tab.c" /* yacc.c:1646  */
+#line 1303 "./src/y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 72 "./src/calc.y" /* yacc.c:1646  */
+#line 73 "./src/calc.y" /* yacc.c:1646  */
     { (yyval.num) = (yyvsp[-1].num); }
-#line 1308 "./src/y.tab.c" /* yacc.c:1646  */
+#line 1309 "./src/y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1312 "./src/y.tab.c" /* yacc.c:1646  */
+#line 1313 "./src/y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1536,7 +1537,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 75 "./src/calc.y" /* yacc.c:1906  */
+#line 76 "./src/calc.y" /* yacc.c:1906  */
 
 
 void yyerror(char *s) {

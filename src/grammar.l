@@ -2,8 +2,8 @@
 %option noinput
 %option noyywrap
 %{
-    #include "y.tab.h"
     #include "ts.h"
+    #include "y.tab.h"
     #include <stdlib.h>
     void yyerror(char *);
 %}
@@ -30,11 +30,10 @@ WORKSPACE           "vars"|"VARS"
             }
 
 [a-z]+      {
-                NULL;
                 yylval.str=strdup(yytext);
                 
-                record_t *record=get_lexcomp(yytext);
-                
+                ts_record_t *record;
+                record=get_lexcomp(yytext);
                 return (record->value);
             };
 

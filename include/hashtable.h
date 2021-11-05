@@ -26,8 +26,9 @@ typedef struct hash_table{
 
 hash_table_t* init_hash_table(ht_size_t table_size);
 int resize_hash_table(hash_table_t* hash_table); 
-record_t* set_value(char* key, ht_value_t value,float attr_value, hash_table_t* hash_table);
-int get_value(char* key, hash_table_t* hash_table,ht_value_t* value,float* attr_value);
+record_t* set_value(char* key, ht_value_t value, hash_table_t* hash_table);
+int get_value(char* key,ht_value_t* value, hash_table_t* hash_table);
+record_t* get_record(char* key, hash_table_t* hash_table);
 int remove_value(char* key, hash_table_t* hash_table);
 int print_hash_table(hash_table_t* hash_table);
 int clear_hash_table(hash_table_t* hash_table);

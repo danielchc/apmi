@@ -15,7 +15,7 @@ typedef struct record{
 	float attr_value;
 }record_t;
 
-record_t* add_front(char* key, ht_value_t value,float attrValue, record_t** head);
+record_t* add_front(char* key, ht_value_t value, record_t** head);
 record_t* remove_front(record_t** head);
 void delete_list(record_t** head);
 

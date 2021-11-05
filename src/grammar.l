@@ -1,4 +1,5 @@
-
+%option nounput
+%option noinput
 %option noyywrap
 %{
     #include "y.tab.h"
@@ -10,7 +11,18 @@ digit                       ([0-9]_?)+
 exp                         [eE][+-]?{digit}+
 integer                     {digit}{exp}?
 decimal                     ({digit})*\.({digit}){exp}?
+
+LOAD                "load "|"LOAD "
+HELP                "HELP"|"help"
+EXIT                "exit"|"EXIT"|"quit"|"QUIT"
+WORKSPACE           "vars"|"VARS"
+
+
 %%
+
+{EXIT} {
+    return EXIT;
+}
 
 {decimal}|{integer}   {  
                 yylval.num = atof(yytext);
@@ -18,15 +30,19 @@ decimal                     ({digit})*\.({digit}){exp}?
             }
 
 [a-z]+      {
+                NULL;
                 yylval.str=strdup(yytext);
-                return ID;
+                
+                record_t *record=get_lexcomp(yytext);
+                
+                return (record->value);
             };
 
 
 
-[-+()=/*]     	{ return *yytext; }
+[-+()=/*^]     	{ return *yytext; }
 
-[\n]     		{ return *yytext; }
+[\n]     		{ return *yytext;  }
 
 [ \t]   ;       /* skip whitespace */
 

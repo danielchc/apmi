@@ -31,6 +31,6 @@ void load_keywords();
 int find_lexcomp(char* lexcomp);
 void print_ts();
 int delete_ts();
-int save_lexcomp(char * lexcomp, unsigned int value,float attr_value);
+record_t* get_lexcomp(char *lexcomp);
 
 #endif

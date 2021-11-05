@@ -1,15 +1,19 @@
+
 %{
     #include "ts.h"
+    #include "term.h"
+    #include "error_handler.h"
     #include <stdio.h>
+    #include <math.h>
     #include <stdlib.h>
     void yyerror(char *);
     int yylex(void);
 %}
 
-%token ID
-%token NUMBER
-%left '+' '-'
+%right '='
+%left '-' '+'
 %left '*' '/'
+%right '^'
 %nonassoc UMINUS
 
 
@@ -19,6 +23,10 @@
     char* str;
     double num;
 }
+%token ID
+%token NUMBER
+%token EXIT
+
 
 %type <num> expression  
 %type <str> statement  
@@ -31,10 +39,15 @@ program:
         ;
 
 statement:
-        expression                      { printf("%f\n", $1); }
+        expression                      { 
+            printf(">>> %f\n", $1);
+            prompt();
+        }
         | ID '=' expression       { 
             //save_lexcomp($1.str,ID,$3);
              //printf("COSA: %s\n",$1);
+            prompt();
+            YYERROR;
         };
 
 expression:
@@ -45,11 +58,12 @@ expression:
         | expression '+' expression     { $$ = $1 + $3; }
         | expression '-' expression     { $$ = $1 - $3; }
         | expression '*' expression     { $$ = $1 * $3; }
+        | expression '^' expression     { $$ = pow($1,$3); }
         | expression '/' expression     {
             if ($3 == 0) {
-                yyerror ("Non se pode dividir entre 0"); exit(0);
-            }
-            else{
+                yyerror("Non se pode dividir entre 0");
+                YYERROR;
+            } else{
                 $$ = $1 / $3; 
             }
                 
@@ -61,5 +75,6 @@ expression:
 %%
 
 void yyerror(char *s) {
-    fprintf(stderr, "Pocho %s\n", s);
+    handle_generic_error("Error sintaxis inválida: ",s);
+    prompt();
 }

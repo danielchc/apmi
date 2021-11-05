@@ -1,4 +1,5 @@
 #include "ts.h"
+#include "y.tab.h"
 ts_s* ts;
 
 /*
@@ -33,35 +34,12 @@ int delete_ts(){
 	return v;
 }
 
-/*
-	find_lexcomp
-		busca un compoñente léxico na táboa de simbolos
-	param:
-		char* lexcomp compoñente léxico a buscar
-	return:
-		se a clave existe devolve 0
-		se a clave non existe -1
-		se a hashtable non existe -2
-*/
-int find_lexcomp(char* lexcomp){
-	unsigned int value;
-	unsigned int attr_value;
-	return get_value(lexcomp,*ts,&value,&attr_value);
-}
 
-
-/*
-	save_lexcomp
-		comproba se existe un compoñente léxico na táboa de simbolos, senon gardao
-	param:
-		char* 	lexcomp: 	compoñente léxico a gardar
-		unsigned  value:	tipo de compoñente léxico
-	return:
-		se todo vai ben devolve 0
-*/
-int save_lexcomp(char * lexcomp, unsigned int value,float attr_value){
-	if(find_lexcomp(lexcomp)==-1){
-		set_value(lexcomp,value,attr_value,*ts);
+record_t* get_lexcomp(char *lexcomp){
+	record_t *record=malloc(sizeof(record_t));
+	record=get_record(lexcomp,*ts);
+	if(!record){
+		return set_value(lexcomp,ID,*ts);
 	}
-	return 0;
+	return record;
 }

@@ -2,5 +2,5 @@
 #include <stdio.h>
 
 void prompt(){
-    printf("apmi> ");
+    printf("\033[0;32mapmi> \033[0m");
 }

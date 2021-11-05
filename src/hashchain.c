@@ -11,7 +11,7 @@
 		devolve o punteiro o novo rexistro
 		otherwise NULL
 */
-record_t* add_front(char* key, ht_value_t value,float attrValue, record_t** head){
+record_t* add_front(char* key, ht_value_t value, record_t** head){
 	if(!head)return NULL;
 	
 	//Garda memoria para o novo rexistro
@@ -26,7 +26,6 @@ record_t* add_front(char* key, ht_value_t value,float attrValue, record_t** head
 	
 	new_record->key = key_copy;
 	new_record->value = value;
-	new_record->attr_value = attrValue;
 	//establece o novo rexistro como cabeza de lista
 	new_record->next_link= *head;
 	*head = new_record;

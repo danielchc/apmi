@@ -72,8 +72,12 @@ statement:
         | VAR '=' expression       { 
             ($1)->attr_value=$3;
             prompt();
-        } 
-        | SYSFUN {
+        }
+        | SYSFUN '(' STRING ')'       {
+            (($1)->fnctptr)($3);
+            prompt();
+        }
+        | SYSFUN '('')'       {
             (($1)->fnctptr)();
             prompt();
         }

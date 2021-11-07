@@ -7,6 +7,8 @@
     #include <stdlib.h>
     void yyerror(char *);
 %}
+%x STRINGSIMPLE
+%x STRINGDOUBLE
 digit                       ([0-9]_?)+
 exp                         [eE][+-]?{digit}+
 integer                     {digit}{exp}?
@@ -16,8 +18,55 @@ subeq						"-="
 muleq						"*="		
 diveq						"/="
 poweq						"^="
-
+simplequote                 "\'"
+doublequote                  "\""
 %%
+
+
+{simplequote}     {
+	/* Inicia un string */
+	BEGIN( STRINGSIMPLE ); 
+}
+<STRINGSIMPLE>{simplequote} {
+	/* Devolve que é un string, final de cadea*/
+    yytext[strlen(yytext)-1]='\0';
+    yylval.str=strdup(yytext);
+	BEGIN(INITIAL);
+	return STRING;
+}
+
+<STRINGSIMPLE>.   { 
+	/* Calquer outro caracter */
+	yymore(); 
+}
+
+<STRINGSIMPLE>\n {
+	/*Da erro porque atopa o fin de ficheiro*/
+	BEGIN(INITIAL);
+	yyerror("String sen cerrar");
+}
+
+
+{doublequote}     { 
+	/* Inicia un string */
+	BEGIN( STRINGDOUBLE ); 
+}
+<STRINGDOUBLE>{doublequote} {
+	/* Devolve que é un string, final de cadea*/
+    yytext[strlen(yytext)-1]='\0';
+    yylval.str=strdup(yytext);
+	BEGIN(INITIAL);
+	return STRING;
+}
+<STRINGDOUBLE>.   { 
+	/* Calquer outro caracter */
+	yymore(); 
+}
+<STRINGDOUBLE>\n {
+	/*Da erro porque atopa o fin de ficheiro*/
+	BEGIN(INITIAL);
+	yyerror("String sen cerrar");
+}
 
 
 {decimal}|{integer}   {  

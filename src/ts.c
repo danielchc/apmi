@@ -11,6 +11,8 @@ sys_fun_t sysfun[]={
 	{"clear",ap_clear},
 	{"workspace",ap_workspace},
 	{"help",ap_help},
+	{"load",ap_load},
+	{"import",ap_import}
 };
 
 const_t consts[]={

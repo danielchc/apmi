@@ -1,6 +1,5 @@
 #include "term.h"
-#include "ts.h"
-#include "y.tab.h"
+
 
 
 void prompt(){
@@ -18,16 +17,13 @@ void ap_ts(){
 
 void ap_clear(){
     clear_ts();
+    printf("Táboa de símbolos limpia\n");
 }
 
 void ap_workspace(){
     ts_s ts=get_ts();
 	ht_size_t i = 0;
 	size_t size = ts->table_size;
-    if(size==0){
-        printf("No hay workspace\n");
-        return;
-    }
     printf("------------------------------------\n");
     printf("SIMBOLO\t\t\tVALOR\n");
 	for(; i < size; ++i){
@@ -45,5 +41,17 @@ void ap_workspace(){
 }
 
 void ap_help(){
-    printf("AIUDA");
+    printf("AIUDA\n");
+}
+
+void ap_load(char* filename){
+    printf("Cargando archivo %s\n",filename);
+    FILE *f=fopen(filename,"r");
+    yyset_in(f);
+    fclose(f);
+    yyset_in(stdin);
+}
+
+void ap_import(char* filename){
+    printf("Liberia %s\n",filename);
 }

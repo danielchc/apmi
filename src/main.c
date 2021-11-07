@@ -11,6 +11,7 @@
 
 int main(int argc, char* argv[]){
     init_ts();
+    load_symbols();
     prompt();
     yyset_in(stdin);
 	while(1){

@@ -46,16 +46,22 @@ extern int yydebug;
   enum yytokentype
   {
     UMINUS = 258,
-    ID = 259,
-    NUMBER = 260,
-    EXIT = 261
+    NUMBER = 259,
+    VAR = 260,
+    CONST = 261,
+    SYSFUN = 262,
+    MATHFUN = 263,
+    STRING = 264
   };
 #endif
 /* Tokens.  */
 #define UMINUS 258
-#define ID 259
-#define NUMBER 260
-#define EXIT 261
+#define NUMBER 259
+#define VAR 260
+#define CONST 261
+#define SYSFUN 262
+#define MATHFUN 263
+#define STRING 264
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -68,7 +74,7 @@ union YYSTYPE
     double num;
     ts_record_t* record;
 
-#line 72 "./src/y.tab.h" /* yacc.c:1909  */
+#line 78 "./src/y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

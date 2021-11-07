@@ -13,6 +13,8 @@ typedef struct record{
 	char* key;
 	ht_value_t value;
 	float attr_value;
+	void (*fnctptr)();
+	double (*mfnctptr)();
 }record_t;
 
 record_t* add_front(char* key, ht_value_t value, record_t** head);

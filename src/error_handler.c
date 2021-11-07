@@ -48,7 +48,7 @@ void handle_lexical_error(error_t error,char * info){
 */
 void handle_generic_error(char* format,...){
 	char msg[200];
-	strcpy(msg,"\033[1;31mERROR:\t");
+	strcpy(msg,"\033[1;31mERROR:");
 	strcat(msg,format);
 	strcat(msg,"\033[0m\n");
 	va_list args;

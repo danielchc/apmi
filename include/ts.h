@@ -11,8 +11,21 @@
 //Estructura dun compoñente léxico
 typedef struct{
 	char	keyword[KEYWORDSIZE];
-	uint   	value;
-}lexcomp_t;
+	void	(*fnctptr)();
+}sys_fun_t;
+
+typedef struct{
+	char	keyword[KEYWORDSIZE];
+	double (*mfnctptr)();
+}math_fun_t;
+
+
+typedef struct{
+	char	keyword[KEYWORDSIZE];
+	float 	value;
+}const_t;
+
+
 
 typedef record_t ts_record_t;
 
@@ -29,7 +42,7 @@ typedef record_t ts_record_t;
 typedef hash_table_t* ts_s;
 
 int init_ts();
-void load_keywords();
+void load_symbols();
 int find_lexcomp(char* lexcomp);
 void print_ts();
 int delete_ts();

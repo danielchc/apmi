@@ -24,12 +24,12 @@
     double num;
     ts_record_t* record;
 }
-%token ID
-%token NUMBER
-%token EXIT
 
+%token <num> NUMBER          
+%token <record> VAR CONST SYSFUN MATHFUN
+%token <str> STRING
+%type <num> expression
 
-%type <num> expression  
 /* %type <record> statement   */
 
 %%
@@ -44,19 +44,22 @@ statement:
             printf(">>> %f\n", $1);
             prompt();
         }
-        | ID '=' expression       { 
-            //save_lexcomp($1.str,ID,$3);
-             //printf("COSA: %s\n",$1);
+        | CONST '=' expression       { 
+            yyerror("Non se pode asignar un valor a unha constante");
+        }
+        | VAR '=' expression       { 
             ($1)->attr_value=$3;
             prompt();
-            YYERROR;
-        };
+        }
+        | SYSFUN {
+            (($1)->fnctptr)();
+        }
 
 expression:
-        NUMBER                         /* default action { $$ = $1; }*/
-        | ID                           {
-            $$=3.0f;
-        }
+        NUMBER
+        | CONST                         { $$=($1)->attr_value; }
+        | VAR                           { $$=($1)->attr_value; }
+        | MATHFUN  '(' expression ')'   {  $$ = ($1->mfnctptr)($3); }
         | expression '+' expression     { $$ = $1 + $3; }
         | expression '-' expression     { $$ = $1 - $3; }
         | expression '*' expression     { $$ = $1 * $3; }
@@ -77,6 +80,6 @@ expression:
 %%
 
 void yyerror(char *s) {
-    handle_generic_error("Error sintaxis inválida: ",s);
+    handle_generic_error("Error sintaxis inválida: %s",s);
     prompt();
 }

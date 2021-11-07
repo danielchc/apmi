@@ -20,9 +20,6 @@ WORKSPACE           "vars"|"VARS"
 
 %%
 
-{EXIT} {
-    return EXIT;
-}
 
 {decimal}|{integer}   {  
                 yylval.num = atof(yytext);
@@ -31,10 +28,9 @@ WORKSPACE           "vars"|"VARS"
 
 [a-z]+      {
                 yylval.str=strdup(yytext);
-                
-                ts_record_t *record;
-                record=get_lexcomp(yytext);
-                return (record->value);
+                yylval.record=get_lexcomp(yytext);
+                printf("Tipo:%d\n",yylval.record->value);
+                return (yylval.record->value);
             };
 
 

@@ -51,7 +51,12 @@ extern int yydebug;
     CONST = 261,
     SYSFUN = 262,
     MATHFUN = 263,
-    STRING = 264
+    STRING = 264,
+    ADDEQ = 265,
+    SUBEQ = 266,
+    MULEQ = 267,
+    DIVEQ = 268,
+    POWEQ = 269
   };
 #endif
 /* Tokens.  */
@@ -62,6 +67,11 @@ extern int yydebug;
 #define SYSFUN 262
 #define MATHFUN 263
 #define STRING 264
+#define ADDEQ 265
+#define SUBEQ 266
+#define MULEQ 267
+#define DIVEQ 268
+#define POWEQ 269
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -74,7 +84,7 @@ union YYSTYPE
     double num;
     ts_record_t* record;
 
-#line 78 "./src/y.tab.h" /* yacc.c:1909  */
+#line 88 "./src/y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

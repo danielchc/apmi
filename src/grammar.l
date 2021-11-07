@@ -11,12 +11,11 @@ digit                       ([0-9]_?)+
 exp                         [eE][+-]?{digit}+
 integer                     {digit}{exp}?
 decimal                     ({digit})*\.({digit}){exp}?
-
-LOAD                "load "|"LOAD "
-HELP                "HELP"|"help"
-EXIT                "exit"|"EXIT"|"quit"|"QUIT"
-WORKSPACE           "vars"|"VARS"
-
+addeq						"+="		
+subeq						"-="		
+muleq						"*="		
+diveq						"/="
+poweq						"^="
 
 %%
 
@@ -26,21 +25,28 @@ WORKSPACE           "vars"|"VARS"
                 return NUMBER;
             }
 
-[a-z]+      {
+[a-zA-Z]+      {
                 yylval.str=strdup(yytext);
                 yylval.record=get_lexcomp(yytext);
-                printf("Tipo:%d\n",yylval.record->value);
+                //printf("Tipo:%d\n",yylval.record->value);
                 return (yylval.record->value);
             };
 
 
 
+{addeq}           { return ADDEQ; }
+{subeq}           { return SUBEQ; }
+{muleq}           { return MULEQ; }
+{diveq}           { return DIVEQ; }
+{poweq}           { return POWEQ; }
+
 [-+()=/*^]     	{ return *yytext; }
+
 
 [\n]     		{ return *yytext;  }
 
 [ \t]   ;       /* skip whitespace */
 
-.               yyerror("Unknown character");
+.               {}
 
 %%

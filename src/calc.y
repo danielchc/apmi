@@ -28,6 +28,8 @@
 %token <num> NUMBER          
 %token <record> VAR CONST SYSFUN MATHFUN
 %token <str> STRING
+
+%token ADDEQ SUBEQ MULEQ DIVEQ POWEQ;
 %type <num> expression
 
 /* %type <record> statement   */
@@ -47,14 +49,34 @@ statement:
         | CONST '=' expression       { 
             yyerror("Non se pode asignar un valor a unha constante");
         }
+        | VAR ADDEQ expression       { 
+            ($1)->attr_value+=$3;
+            prompt();
+        }        
+        | VAR SUBEQ expression       { 
+            ($1)->attr_value-=$3;
+            prompt();
+        }        
+        | VAR MULEQ expression       { 
+            ($1)->attr_value*=$3;
+            prompt();
+        }        
+        | VAR DIVEQ expression       { 
+            ($1)->attr_value/=$3;
+            prompt();
+        }
+        | VAR POWEQ expression       { 
+            ($1)->attr_value=pow(($1)->attr_value,$3);
+            prompt();
+        }
         | VAR '=' expression       { 
             ($1)->attr_value=$3;
             prompt();
-        }
+        } 
         | SYSFUN {
             (($1)->fnctptr)();
         }
-
+        ;
 expression:
         NUMBER
         | CONST                         { $$=($1)->attr_value; }

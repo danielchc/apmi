@@ -75,6 +75,7 @@ statement:
         } 
         | SYSFUN {
             (($1)->fnctptr)();
+            prompt();
         }
         ;
 expression:

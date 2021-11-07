@@ -463,8 +463,8 @@ static const yytype_uint8 yytranslate[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    40,    40,    41,    45,    49,    52,    56,    60,    64,
-      68,    72,    76,    81,    82,    83,    84,    85,    86,    87,
-      88,    89,    98,    99
+      68,    72,    76,    82,    83,    84,    85,    86,    87,    88,
+      89,    90,    99,   100
 };
 #endif
 
@@ -1338,54 +1338,55 @@ yyreduce:
 #line 76 "./src/calc.y" /* yacc.c:1646  */
     {
             (((yyvsp[0].record))->fnctptr)();
+            prompt();
         }
-#line 1343 "./src/y.tab.c" /* yacc.c:1646  */
+#line 1344 "./src/y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 82 "./src/calc.y" /* yacc.c:1646  */
+#line 83 "./src/calc.y" /* yacc.c:1646  */
     { (yyval.num)=((yyvsp[0].record))->attr_value; }
-#line 1349 "./src/y.tab.c" /* yacc.c:1646  */
+#line 1350 "./src/y.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 83 "./src/calc.y" /* yacc.c:1646  */
+#line 84 "./src/calc.y" /* yacc.c:1646  */
     { (yyval.num)=((yyvsp[0].record))->attr_value; }
-#line 1355 "./src/y.tab.c" /* yacc.c:1646  */
+#line 1356 "./src/y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 84 "./src/calc.y" /* yacc.c:1646  */
+#line 85 "./src/calc.y" /* yacc.c:1646  */
     {  (yyval.num) = ((yyvsp[-3].record)->mfnctptr)((yyvsp[-1].num)); }
-#line 1361 "./src/y.tab.c" /* yacc.c:1646  */
+#line 1362 "./src/y.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 85 "./src/calc.y" /* yacc.c:1646  */
+#line 86 "./src/calc.y" /* yacc.c:1646  */
     { (yyval.num) = (yyvsp[-2].num) + (yyvsp[0].num); }
-#line 1367 "./src/y.tab.c" /* yacc.c:1646  */
+#line 1368 "./src/y.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 86 "./src/calc.y" /* yacc.c:1646  */
+#line 87 "./src/calc.y" /* yacc.c:1646  */
     { (yyval.num) = (yyvsp[-2].num) - (yyvsp[0].num); }
-#line 1373 "./src/y.tab.c" /* yacc.c:1646  */
+#line 1374 "./src/y.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 87 "./src/calc.y" /* yacc.c:1646  */
+#line 88 "./src/calc.y" /* yacc.c:1646  */
     { (yyval.num) = (yyvsp[-2].num) * (yyvsp[0].num); }
-#line 1379 "./src/y.tab.c" /* yacc.c:1646  */
+#line 1380 "./src/y.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 88 "./src/calc.y" /* yacc.c:1646  */
+#line 89 "./src/calc.y" /* yacc.c:1646  */
     { (yyval.num) = pow((yyvsp[-2].num),(yyvsp[0].num)); }
-#line 1385 "./src/y.tab.c" /* yacc.c:1646  */
+#line 1386 "./src/y.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 89 "./src/calc.y" /* yacc.c:1646  */
+#line 90 "./src/calc.y" /* yacc.c:1646  */
     {
             if ((yyvsp[0].num) == 0) {
                 yyerror("Non se pode dividir entre 0");
@@ -1395,23 +1396,23 @@ yyreduce:
             }
                 
         }
-#line 1399 "./src/y.tab.c" /* yacc.c:1646  */
+#line 1400 "./src/y.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 98 "./src/calc.y" /* yacc.c:1646  */
+#line 99 "./src/calc.y" /* yacc.c:1646  */
     { (yyval.num) = -(yyvsp[0].num);}
-#line 1405 "./src/y.tab.c" /* yacc.c:1646  */
+#line 1406 "./src/y.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 99 "./src/calc.y" /* yacc.c:1646  */
+#line 100 "./src/calc.y" /* yacc.c:1646  */
     { (yyval.num) = (yyvsp[-1].num); }
-#line 1411 "./src/y.tab.c" /* yacc.c:1646  */
+#line 1412 "./src/y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1415 "./src/y.tab.c" /* yacc.c:1646  */
+#line 1416 "./src/y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1639,7 +1640,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 102 "./src/calc.y" /* yacc.c:1906  */
+#line 103 "./src/calc.y" /* yacc.c:1906  */
 
 
 void yyerror(char *s) {

@@ -46,6 +46,8 @@ void load_symbols();
 int find_lexcomp(char* lexcomp);
 void print_ts();
 int delete_ts();
+int clear_ts();
+ts_s get_ts();
 record_t* get_lexcomp(char *lexcomp);
 
 #endif

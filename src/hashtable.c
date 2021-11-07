@@ -330,6 +330,7 @@ int clear_hash_table(hash_table_t* hash_table){
 	//Elimina a memoria das listas
 	free(hash_table->lists);
 	hash_table->lists = NULL;
+	hash_table->num_records = 0;
 
 	return 0;
 }

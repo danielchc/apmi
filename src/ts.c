@@ -7,7 +7,10 @@ ts_s* ts;
 sys_fun_t sysfun[]={
 	{"exit",ap_exit},
 	{"quit",ap_exit},
-	{"ts",ap_ts}
+	{"ts",ap_ts},
+	{"clear",ap_clear},
+	{"workspace",ap_workspace},
+	{"help",ap_help},
 };
 
 const_t consts[]={
@@ -41,6 +44,7 @@ ts_s* ts;
 int init_ts(){
 	ts=malloc(sizeof(ts));
 	(*ts)=init_hash_table(HASHTABLE_SIZE);
+	load_symbols();
 	return (ts==NULL);
 }
 
@@ -89,6 +93,16 @@ int delete_ts(){
 	return v;
 }
 
+int clear_ts(){
+	delete_hash_table(ts);
+	init_ts();
+	return 0;
+}
+
+
+ts_s get_ts(){
+	return (*ts);
+}
 
 ts_record_t* get_lexcomp(char *lexcomp){
 	ts_record_t *record=malloc(sizeof(record_t));

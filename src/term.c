@@ -60,7 +60,14 @@ void ap_load(char* filename){
 }
 
 void ap_import(char* filename){
-    printf("Liberia %s\n",filename);
+    printf("Librería %s\n",filename);
+    void *plugin;
+    plugin = dlopen(filename, RTLD_NOW);
+    if (!plugin){
+        handle_generic_error("Non se puido cargar a librería %s", dlerror());
+    }
+    
+
 }
 
 void ap_echo(char* mode){

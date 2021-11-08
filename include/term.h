@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <dlfcn.h>
 #include "ts.h"
 #include "y.tab.h"
 #include "lex.yy.h"

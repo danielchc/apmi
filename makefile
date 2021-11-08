@@ -13,7 +13,7 @@ OBJ := $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 CPPFLAGS := -Iinclude
 CFLAGS   := -Wall
-LDLIBS   := -lm
+LDLIBS   := -lm -ldl
 
 .PHONY: all clean lex
 

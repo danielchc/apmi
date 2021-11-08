@@ -3,7 +3,8 @@
 
 
 void prompt(){
-    printf("\033[0;32mapmi> \033[0m");
+    if(yyget_in()==stdin)
+        printf("\033[0;32mapmi> \033[0m");
 }
 
 void ap_exit(){
@@ -15,6 +16,10 @@ void ap_ts(){
     print_ts();
 }
 
+void ap_cls(){
+    printf("\e[1;1H\e[2J");
+}
+
 void ap_clear(){
     clear_ts();
     printf("Táboa de símbolos limpia\n");
@@ -22,22 +27,22 @@ void ap_clear(){
 
 void ap_workspace(){
     ts_s ts=get_ts();
+    int sym_count=0;
 	ht_size_t i = 0;
 	size_t size = ts->table_size;
-    printf("------------------------------------\n");
-    printf("SIMBOLO\t\t\tVALOR\n");
 	for(; i < size; ++i){
 		if(ts->lists[i]){
 			record_t* head=ts->lists[i];
 			while(head){   
                 if(head->value==VAR){
-				    printf("%s\t\t\t%f\n", head->key, head->attr_value);
+				    printf("%s=%f\n", head->key, head->attr_value);
+                    sym_count++;
                 }
 				head = head->next_link; 
 			}
 		}
 	}
-    printf("------------------------------------\n");
+    if(sym_count==0)printf("Non hai variables almacenadas no workspace\n");
 }
 
 void ap_help(){
@@ -45,13 +50,27 @@ void ap_help(){
 }
 
 void ap_load(char* filename){
-    printf("Cargando archivo %s\n",filename);
     FILE *f=fopen(filename,"r");
+    if(f==NULL){
+        handle_generic_error("Non se puido cargar o ficheiro %s",filename);
+        return;
+    }
+    printf("Cargando ficheiro %s\n",filename);
     yyset_in(f);
-    fclose(f);
-    yyset_in(stdin);
 }
 
 void ap_import(char* filename){
     printf("Liberia %s\n",filename);
+}
+
+void ap_echo(char* mode){
+    if(strcmp(mode,"on")==0){
+        printf("Echo activado\n");
+        yyset_echo(1);
+    }else if(strcmp(mode,"off")==0){
+        printf("Echo desactivado\n");
+        yyset_echo(0);
+    }else{
+        handle_generic_error("Modo de echo incorrecto");
+    }
 }

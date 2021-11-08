@@ -75,11 +75,11 @@ doublequote                  "\""
             }
 
 [a-zA-Z]+      {
-                yylval.str=strdup(yytext);
-                yylval.record=get_lexcomp(yytext);
-                //printf("Tipo:%d\n",yylval.record->value);
-                return (yylval.record->value);
-            };
+		yylval.str=strdup(yytext);
+		yylval.record=get_lexcomp(yytext);
+		//printf("Tipo:%d\n",yylval.record->value);
+		return (yylval.record->value);
+};
 
 
 
@@ -97,5 +97,14 @@ doublequote                  "\""
 [ \t]   ;       /* skip whitespace */
 
 .               {}
+
+
+<<EOF>> {
+    fclose(yyin);
+    yyset_in(stdin);
+    yyrestart(yyin);
+    BEGIN(INITIAL);
+    return '\n';
+}
 
 %%

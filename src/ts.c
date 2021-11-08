@@ -12,7 +12,9 @@ sys_fun_t sysfun[]={
 	{"workspace",ap_workspace},
 	{"help",ap_help},
 	{"load",ap_load},
-	{"import",ap_import}
+	{"import",ap_import},
+	{"cls",ap_cls},
+	{"echo",ap_echo}
 };
 
 const_t consts[]={

@@ -1,4 +1,3 @@
-
 %{
     #include "ts.h"
     #include "term.h"
@@ -8,6 +7,7 @@
     #include <stdlib.h>
     void yyerror(char *);
     int yylex(void);
+    int echo=1;
 %}
 
 %right '='
@@ -15,9 +15,6 @@
 %left '*' '/'
 %right '^'
 %nonassoc UMINUS
-
-
-
 
 %union{
     char* str;
@@ -32,22 +29,26 @@
 %token ADDEQ SUBEQ MULEQ DIVEQ POWEQ;
 %type <num> expression
 
-/* %type <record> statement   */
-
 %%
 
 program:
         program statement '\n'
-        | /* NULL */
+        |
         ;
 
 statement:
         expression                      { 
-            printf(">>> %f\n", $1);
+            if(echo) printf(">>> %f\n", $1);
             prompt();
         }
         | CONST '=' expression       { 
             yyerror("Non se pode asignar un valor a unha constante");
+        }        
+        | SYSFUN '=' expression       { 
+            yyerror("Non se pode asignar un valor a unha función");
+        }        
+        | MATHFUN '=' expression       { 
+            yyerror("Non se pode asignar un valor a unha función");
         }
         | VAR ADDEQ expression       { 
             ($1)->attr_value+=$3;
@@ -81,6 +82,10 @@ statement:
             (($1)->fnctptr)();
             prompt();
         }
+        |                      { 
+            prompt();
+        }
+
         ;
 expression:
         NUMBER
@@ -109,4 +114,8 @@ expression:
 void yyerror(char *s) {
     handle_generic_error("Error sintaxis inválida: %s",s);
     prompt();
+}
+
+void yyset_echo(int value){
+    echo=value;
 }

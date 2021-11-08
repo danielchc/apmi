@@ -11,10 +11,8 @@
 
 int main(int argc, char* argv[]){
     init_ts();
-    prompt();
     yyset_in(stdin);
-	while(1){
-        yyparse();
-    }
+    prompt();
+    while(1) yyparse();
 	return 0;
 }

@@ -863,11 +863,11 @@ case 10:
 YY_RULE_SETUP
 #line 77 "./src/grammar.l"
 {
-                yylval.str=strdup(yytext);
-                yylval.record=get_lexcomp(yytext);
-                //printf("Tipo:%d\n",yylval.record->value);
-                return (yylval.record->value);
-            };
+		yylval.str=strdup(yytext);
+		yylval.record=get_lexcomp(yytext);
+		//printf("Tipo:%d\n",yylval.record->value);
+		return (yylval.record->value);
+};
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
@@ -915,16 +915,24 @@ YY_RULE_SETUP
 #line 99 "./src/grammar.l"
 {}
 	YY_BREAK
-case 20:
-YY_RULE_SETUP
-#line 101 "./src/grammar.l"
-ECHO;
-	YY_BREAK
-#line 924 "./src/lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(STRINGSIMPLE):
 case YY_STATE_EOF(STRINGDOUBLE):
-	yyterminate();
+#line 102 "./src/grammar.l"
+{
+    fclose(yyin);
+    yyset_in(stdin);
+    yyrestart(yyin);
+    BEGIN(INITIAL);
+    return '\n';
+}
+	YY_BREAK
+case 20:
+YY_RULE_SETUP
+#line 110 "./src/grammar.l"
+ECHO;
+	YY_BREAK
+#line 936 "./src/lex.yy.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1886,7 +1894,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 101 "./src/grammar.l"
+#line 110 "./src/grammar.l"
 
 
 

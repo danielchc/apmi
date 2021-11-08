@@ -78,7 +78,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 22 "./src/calc.y" /* yacc.c:1909  */
+#line 19 "./src/calc.y" /* yacc.c:1909  */
 
     char* str;
     double num;

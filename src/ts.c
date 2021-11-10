@@ -15,7 +15,8 @@ sys_fun_t sysfun[]={
 	{"import",ap_import},
 	{"cls",ap_cls},
 	{"echo",ap_echo},
-	{"external",ap_external}
+	{"external",ap_external},
+	{"print",ap_print}
 };
 
 const_t consts[]={
@@ -80,6 +81,12 @@ void load_symbols(){
 	}
 }
 
+void add_math_fun(char* keyword, double (*mfnctptr)()){
+	record_t* record;
+    record=set_value(keyword,MATHFUN,(*ts));
+    record->mfnctptr=mfnctptr;
+}
+
 
 /*
 	print_ts
@@ -102,17 +109,29 @@ int delete_ts(){
 	return v;
 }
 
+/*
+	clear_ts
+		borra a táboa de simbolos
+*/
 int clear_ts(){
 	delete_hash_table(ts);
 	init_ts();
 	return 0;
 }
 
-
+/*
+	get_ts
+		obten a táboa de simbolos
+*/
 ts_s get_ts(){
 	return (*ts);
 }
 
+
+/*
+	get_lexcomp
+		obten un simbolo da tabla e gardao se non existe
+*/
 ts_record_t* get_lexcomp(char *lexcomp,int *initialized){
 	*initialized=1;
 	ts_record_t *record=malloc(sizeof(record_t));

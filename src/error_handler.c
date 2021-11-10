@@ -75,6 +75,34 @@ void handle_generic_warning(char* warning,...){
 	va_end (args);
 }
 
+/*
+	handle_generic_success
+		imprime mensaxe de execucion correcta
+	param:
+		char* format: mensaxe a mostrar
+*/
+void handle_generic_success(char* success,...){
+	char msg[200];
+	strcpy(msg,"\033[1;32mOK:");
+	strcat(msg,success);
+	strcat(msg,"\033[0m\n");
+	va_list args;
+	va_start(args, success);
+	vprintf (msg, args);
+	va_end (args);
+}
+
+void handle_generic_info(char* info,...){
+	char msg[200];
+	strcpy(msg,"INFO:");
+	strcat(msg,info);
+	strcat(msg,"\n");
+	va_list args;
+	va_start(args, info);
+	vprintf (msg, args);
+	va_end (args);
+}
+
 
 /*
 	print_error_stats

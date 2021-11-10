@@ -21,7 +21,7 @@ void ap_cls(){
 
 void ap_clear(){
     clear_ts();
-    printf("Táboa de símbolos limpia\n");
+    handle_generic_success("Táboa de símbolos limpia\n");
 }
 
 void ap_workspace(){
@@ -50,6 +50,7 @@ void ap_help(){
     printf("\tclear()\t\t\tBorra as variables do espazo de traballo\n");
     printf("\tcls()\t\t\tLimpia a pantalla\n");
     printf("\techo(\"on\"/\"off\")\tActiva ou desactiva o imprimir por pantalla\n");
+    printf("\tprint()\t\t\tImprime un string\n");
     printf("\texit()\t\t\tCerra a terminal (alias quit())\n");
     printf("\thelp()\t\t\tMostra esta axuda\n");
     printf("\timport(arquivo)\t\tCarga unha liberia externa\n");
@@ -86,8 +87,6 @@ void ap_help(){
     printf("\t(a)\t\t\tParentesis\n");
     printf("\ta=b\t\t\tAsignación\n");
     printf("\ta[+ - * /]=b\t\tAsignación con operador\n\n");
-    handle_generic_warning("Para cargar un ficheiro faise co comando load(\"arquivo_a_cargar\") destacar que o arquivo debe empezar con un salto de liña xa que se non se evaluará a primeira expresión. O programa permite facer importacións anidadas dentro dos ficheiros\n");
-
 }
 
 void ap_load(char* filename){
@@ -100,13 +99,13 @@ void ap_load(char* filename){
 }
 
 void ap_import(char* filename){
-    printf("Intentando cargar librería %s\n",filename);
+    handle_generic_info("Intentando cargar librería %s",filename);
    
     plugin = dlopen(filename, RTLD_NOW);
     if (!plugin){
         handle_generic_error("Non se puido cargar a librería %s", dlerror());
     }else{
-        printf("Librería cargada correctamente\n");
+        handle_generic_success("Librería cargada correctamente");
     }
 }
 
@@ -115,13 +114,14 @@ void ap_external(char *name){
         handle_generic_error("Non hai ningunha libreria cargada");
         return;
     }
-    double* (*fptr)()=dlsym(plugin, name);
+    double (*fptr)()=dlsym(plugin, name);
     if(!fptr){
-        handle_generic_error("Non se atopou a función %s\n",name);
+        handle_generic_error("Non se atopou a función %s",name);
         return;
     }
-    printf("%p\n",fptr);
-    printf("%p\n",(*fptr)(4));
+    handle_generic_success("Añadida a función %s a táboa de simbolos",name);
+    add_math_fun(name,fptr);
+
 }
 
 void ap_echo(char* mode){
@@ -134,4 +134,8 @@ void ap_echo(char* mode){
     }else{
         handle_generic_error("Modo de echo incorrecto");
     }
+}
+
+void ap_print(char* msg){
+    printf("%s\n",msg);
 }

@@ -44,7 +44,7 @@ statement:
         | function '\n'  {
             prompt();
         } 
-        | error '\n' {yyerrok;}
+        | error '\n' {yyerrok; prompt();}
         ;
 function:
         | CONST '=' expression       { 
@@ -111,7 +111,6 @@ expression:
 
 void yyerror(char *s) {
     handle_generic_error("Error sintaxis inválida: %s",s);
-    prompt();
 }
 
 void yyset_echo(int value){

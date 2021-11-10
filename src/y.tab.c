@@ -1290,7 +1290,7 @@ yyreduce:
 
   case 6:
 #line 47 "./src/lexsrc/calc.y" /* yacc.c:1646  */
-    {yyerrok;}
+    {yyerrok; prompt();}
 #line 1295 "./src/y.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1688,7 +1688,6 @@ yyreturn:
 
 void yyerror(char *s) {
     handle_generic_error("Error sintaxis inválida: %s",s);
-    prompt();
 }
 
 void yyset_echo(int value){

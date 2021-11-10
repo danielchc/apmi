@@ -40,22 +40,41 @@ void handle_lexical_error(error_t error,char * info){
 	error_count++;
 }
 
+
 /*
-	handle_lexical_error
+	handle_generic_error
 		imprime un erro xenerico
 	param:
 		char* format: mensaxe a mostrar
 */
-void handle_generic_error(char* format,...){
+void handle_generic_error(char* error,...){
 	char msg[200];
 	strcpy(msg,"\033[1;31mERROR:");
-	strcat(msg,format);
+	strcat(msg,error);
 	strcat(msg,"\033[0m\n");
 	va_list args;
-	va_start(args, format);
+	va_start(args, error);
 	vprintf (msg, args);
 	va_end (args);
 }
+
+/*
+	handle_generic_warning
+		imprime un erro xenerico
+	param:
+		char* format: mensaxe a mostrar
+*/
+void handle_generic_warning(char* warning,...){
+	char msg[200];
+	strcpy(msg,"\033[1;33mADVERTENCIA:");
+	strcat(msg,warning);
+	strcat(msg,"\033[0m\n");
+	va_list args;
+	va_start(args, warning);
+	vprintf (msg, args);
+	va_end (args);
+}
+
 
 /*
 	print_error_stats

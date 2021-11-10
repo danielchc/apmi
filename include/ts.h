@@ -48,6 +48,6 @@ void print_ts();
 int delete_ts();
 int clear_ts();
 ts_s get_ts();
-record_t* get_lexcomp(char *lexcomp);
+ts_record_t* get_lexcomp(char *lexcomp,int *initialized);
 
 #endif

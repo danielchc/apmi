@@ -330,6 +330,9 @@ void yyfree (void *  );
 
 /* Begin user sect3 */
 
+#define yywrap() (/*CONSTCOND*/1)
+#define YY_SKIP_YYWRAP
+
 typedef unsigned char YY_CHAR;
 
 FILE *yyin = NULL, *yyout = NULL;
@@ -482,9 +485,10 @@ static int yy_more_len = 0;
 char *yytext;
 #line 1 "./src/lexsrc/grammar.l"
 #define YY_NO_INPUT 1
-#line 4 "./src/lexsrc/grammar.l"
+#line 5 "./src/lexsrc/grammar.l"
     #include "ts.h"
     #include "y.tab.h"
+    #include "error_handler.h"
     #include <stdlib.h>
 	#define MAX_INCLUDE_DEPTH 10
 	YY_BUFFER_STATE include_stack[MAX_INCLUDE_DEPTH];
@@ -493,7 +497,7 @@ char *yytext;
 	int yy_swap_buffer(char* filename);
 
 
-#line 497 "./src/lex.yy.c"
+#line 501 "./src/lex.yy.c"
 
 #define INITIAL 0
 #define STRINGSIMPLE 1
@@ -711,11 +715,11 @@ YY_DECL
 		}
 
 	{
-#line 26 "./src/lexsrc/grammar.l"
+#line 28 "./src/lexsrc/grammar.l"
 
 
 
-#line 719 "./src/lex.yy.c"
+#line 723 "./src/lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -780,7 +784,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 29 "./src/lexsrc/grammar.l"
+#line 31 "./src/lexsrc/grammar.l"
 {
 	/* Inicia un string */
 	BEGIN( STRINGSIMPLE ); 
@@ -788,7 +792,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 33 "./src/lexsrc/grammar.l"
+#line 35 "./src/lexsrc/grammar.l"
 {
 	/* Devolve que é un string, final de cadea*/
     yytext[strlen(yytext)-1]='\0';
@@ -799,7 +803,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 41 "./src/lexsrc/grammar.l"
+#line 43 "./src/lexsrc/grammar.l"
 { 
 	/* Calquer outro caracter */
 	yymore(); 
@@ -808,7 +812,7 @@ YY_RULE_SETUP
 case 4:
 /* rule 4 can match eol */
 YY_RULE_SETUP
-#line 46 "./src/lexsrc/grammar.l"
+#line 48 "./src/lexsrc/grammar.l"
 {
 	/*Da erro porque atopa o fin de ficheiro*/
 	BEGIN(INITIAL);
@@ -817,7 +821,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 53 "./src/lexsrc/grammar.l"
+#line 55 "./src/lexsrc/grammar.l"
 { 
 	/* Inicia un string */
 	BEGIN( STRINGDOUBLE ); 
@@ -825,7 +829,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 57 "./src/lexsrc/grammar.l"
+#line 59 "./src/lexsrc/grammar.l"
 {
 	/* Devolve que é un string, final de cadea*/
     yytext[strlen(yytext)-1]='\0';
@@ -836,7 +840,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 64 "./src/lexsrc/grammar.l"
+#line 66 "./src/lexsrc/grammar.l"
 { 
 	/* Calquer outro caracter */
 	yymore(); 
@@ -845,7 +849,7 @@ YY_RULE_SETUP
 case 8:
 /* rule 8 can match eol */
 YY_RULE_SETUP
-#line 68 "./src/lexsrc/grammar.l"
+#line 70 "./src/lexsrc/grammar.l"
 {
 	/*Da erro porque atopa o fin de ficheiro*/
 	BEGIN(INITIAL);
@@ -854,76 +858,78 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 75 "./src/lexsrc/grammar.l"
+#line 77 "./src/lexsrc/grammar.l"
 {  
-                yylval.num = atof(yytext);
-                return NUMBER;
-            }
+	yylval.num = atof(yytext);
+	return NUMBER;
+};
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 80 "./src/lexsrc/grammar.l"
+#line 82 "./src/lexsrc/grammar.l"
 {
-		yylval.str=strdup(yytext);
-		yylval.record=get_lexcomp(yytext);
-		return (yylval.record->value);
+	int initialized;
+	yylval.str=strdup(yytext);
+	yylval.record=get_lexcomp(yytext,&initialized);
+	if((!initialized) && yylval.record->value==VAR) return VARUN;
+	return (yylval.record->value);
 };
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 88 "./src/lexsrc/grammar.l"
+#line 92 "./src/lexsrc/grammar.l"
 { return ADDEQ; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 89 "./src/lexsrc/grammar.l"
+#line 93 "./src/lexsrc/grammar.l"
 { return SUBEQ; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 90 "./src/lexsrc/grammar.l"
+#line 94 "./src/lexsrc/grammar.l"
 { return MULEQ; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 91 "./src/lexsrc/grammar.l"
+#line 95 "./src/lexsrc/grammar.l"
 { return DIVEQ; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 92 "./src/lexsrc/grammar.l"
+#line 96 "./src/lexsrc/grammar.l"
 { return POWEQ; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 94 "./src/lexsrc/grammar.l"
+#line 98 "./src/lexsrc/grammar.l"
 { return *yytext; }
 	YY_BREAK
 case 17:
 /* rule 17 can match eol */
 YY_RULE_SETUP
-#line 97 "./src/lexsrc/grammar.l"
+#line 101 "./src/lexsrc/grammar.l"
 { return *yytext;  }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 99 "./src/lexsrc/grammar.l"
+#line 103 "./src/lexsrc/grammar.l"
 ;       /* skip whitespace */
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 100 "./src/lexsrc/grammar.l"
+#line 104 "./src/lexsrc/grammar.l"
 ;       /* skip whitespace */
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 102 "./src/lexsrc/grammar.l"
+#line 106 "./src/lexsrc/grammar.l"
 { return *yytext; }
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(STRINGSIMPLE):
 case YY_STATE_EOF(STRINGDOUBLE):
-#line 105 "./src/lexsrc/grammar.l"
+#line 109 "./src/lexsrc/grammar.l"
 {
 	fclose(yyin);
 	if ( --include_stack_ptr < 0) {
@@ -937,10 +943,10 @@ case YY_STATE_EOF(STRINGDOUBLE):
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 116 "./src/lexsrc/grammar.l"
+#line 120 "./src/lexsrc/grammar.l"
 ECHO;
 	YY_BREAK
-#line 944 "./src/lex.yy.c"
+#line 950 "./src/lex.yy.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1902,7 +1908,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 116 "./src/lexsrc/grammar.l"
+#line 120 "./src/lexsrc/grammar.l"
 
 
 
@@ -1919,6 +1925,5 @@ int yy_swap_buffer(char* filename){
 	return 0;
 }
 
-int yywrap() { return 1; }
 
 

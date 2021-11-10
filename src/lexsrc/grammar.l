@@ -1,8 +1,10 @@
+%option noyywrap
 %option nounput
 %option noinput
 %{
     #include "ts.h"
     #include "y.tab.h"
+    #include "error_handler.h"
     #include <stdlib.h>
 	#define MAX_INCLUDE_DEPTH 10
 	YY_BUFFER_STATE include_stack[MAX_INCLUDE_DEPTH];
@@ -73,14 +75,16 @@ doublequote                  "\""
 
 
 {decimal}|{integer}   {  
-                yylval.num = atof(yytext);
-                return NUMBER;
-            }
+	yylval.num = atof(yytext);
+	return NUMBER;
+};
 
 [a-zA-Z]+[a-zA-Z0-9_]*      {
-		yylval.str=strdup(yytext);
-		yylval.record=get_lexcomp(yytext);
-		return (yylval.record->value);
+	int initialized;
+	yylval.str=strdup(yytext);
+	yylval.record=get_lexcomp(yytext,&initialized);
+	if((!initialized) && yylval.record->value==VAR) return VARUN;
+	return (yylval.record->value);
 };
 
 
@@ -128,5 +132,4 @@ int yy_swap_buffer(char* filename){
 	return 0;
 }
 
-int yywrap() { return 1; }
 

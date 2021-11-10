@@ -18,3 +18,4 @@ void ap_load(char* filename);
 void ap_echo(char* mode);
 void ap_import(char* filename);
 void yyset_echo(int value);
+int yy_swap_buffer(char* filename);

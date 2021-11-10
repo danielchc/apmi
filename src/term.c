@@ -6,8 +6,7 @@ void prompt(){
 }
 
 void ap_exit(){
-    printf("Mi voy\n");
-    printf("Que lastima pero adios\n");
+    printf("Adiós!\n");
     exit(0);
 }
 void ap_ts(){

@@ -16,8 +16,9 @@ typedef enum{
 }error_t;
 
 void init_error_handler();
-void handle_lexical_error(error_t error,char * info);
+void handle_lexical_error(error_t error,char* info);
 void handle_generic_error(char* error,...);
+void handle_generic_warning(char* warning,...);
 void print_error_stats();
 
 #endif

@@ -197,6 +197,9 @@ void yyfree (void *  );
 
 /* Begin user sect3 */
 
+#define yywrap() (/*CONSTCOND*/1)
+#define YY_SKIP_YYWRAP
+
 extern int yylineno;
 
 extern char *yytext;
@@ -317,9 +320,9 @@ extern int yylex (void);
 #undef YY_DECL
 #endif
 
-#line 116 "./src/lexsrc/grammar.l"
+#line 120 "./src/lexsrc/grammar.l"
 
 
-#line 324 "./include/lex.yy.h"
+#line 327 "./include/lex.yy.h"
 #undef yyIN_HEADER
 #endif /* yyHEADER_H */

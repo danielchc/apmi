@@ -4,3 +4,4 @@
 3*2
 a*2
 9+a
+load("test2.pa")

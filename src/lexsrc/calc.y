@@ -32,16 +32,21 @@
 %%
 
 program:
-        program statement '\n'
-        |error '\n'
+        program statement
         |
         ;
 
 statement:
-        expression                      { 
+        expression  '\n'                    { 
             if(echo) printf(">>> %f\n", $1);
             prompt();
         }
+        | function '\n'  {
+            prompt();
+        } 
+        | error '\n' {yyerrok;}
+        ;
+function:
         | CONST '=' expression       { 
             yyerror("Non se pode asignar un valor a unha constante");
         }        
@@ -69,19 +74,15 @@ statement:
         }
         | VAR POWEQ expression       { 
             ($1)->attr_value=pow(($1)->attr_value,$3);
-            prompt();
         }
         | VAR '=' expression       { 
             ($1)->attr_value=$3;
-            prompt();
         }
         | SYSFUN '(' STRING ')'       {
             (($1)->fnctptr)($3);
-            prompt();
         }
         | SYSFUN '('')'       {
             (($1)->fnctptr)();
-            prompt();
         }
         ;
 expression:
@@ -109,7 +110,7 @@ expression:
 %%
 
 void yyerror(char *s) {
-    handle_generic_error("Error sintaxis inválida: %s -> %s %d",s,yytext,strlen(yytext));
+    handle_generic_error("Error sintaxis inválida: %s",s);
     prompt();
 }
 

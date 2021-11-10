@@ -52,7 +52,7 @@ void ap_load(char* filename){
     if(result==-1){
         handle_generic_error("Non se pode cargar recursivamente tantos ficheiros");
     }else if (result==-2){
-        handle_generic_error("Non se atopou o ficheiro %s\n",filename);
+        handle_generic_error("Non se atopou o ficheiro %s",filename);
     }
 }
 

@@ -105,11 +105,12 @@ doublequote                  "\""
 <<EOF>> {
 	fclose(yyin);
 	if ( --include_stack_ptr < 0) {
-		yyterminate();
+		yyin=stdin;
 	} else {
 		yy_delete_buffer(YY_CURRENT_BUFFER);
 		yy_switch_to_buffer(include_stack[include_stack_ptr]);
 	}
+	//return '\n';
 }
 
 %%
@@ -119,9 +120,9 @@ int yy_swap_buffer(char* filename){
         return -1;
     }
     include_stack[include_stack_ptr++] = YY_CURRENT_BUFFER;
-    yyin = fopen(filename, "r");
-    
-    if (!yyin) return -2;
+    FILE* f = fopen(filename, "r");
+	if (!f) return -2;
+    yyin=f;
     yy_switch_to_buffer(yy_create_buffer(yyin, YY_BUF_SIZE));
     BEGIN(INITIAL);
 	return 0;

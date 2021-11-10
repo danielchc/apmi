@@ -927,19 +927,20 @@ case YY_STATE_EOF(STRINGDOUBLE):
 {
 	fclose(yyin);
 	if ( --include_stack_ptr < 0) {
-		yyterminate();
+		yyin=stdin;
 	} else {
 		yy_delete_buffer(YY_CURRENT_BUFFER);
 		yy_switch_to_buffer(include_stack[include_stack_ptr]);
 	}
+	//return '\n';
 }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 115 "./src/lexsrc/grammar.l"
+#line 116 "./src/lexsrc/grammar.l"
 ECHO;
 	YY_BREAK
-#line 943 "./src/lex.yy.c"
+#line 944 "./src/lex.yy.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1901,7 +1902,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 115 "./src/lexsrc/grammar.l"
+#line 116 "./src/lexsrc/grammar.l"
 
 
 
@@ -1910,9 +1911,9 @@ int yy_swap_buffer(char* filename){
         return -1;
     }
     include_stack[include_stack_ptr++] = YY_CURRENT_BUFFER;
-    yyin = fopen(filename, "r");
-    
-    if (!yyin) return -2;
+    FILE* f = fopen(filename, "r");
+	if (!f) return -2;
+    yyin=f;
     yy_switch_to_buffer(yy_create_buffer(yyin,YY_BUF_SIZE));
     BEGIN(INITIAL);
 	return 0;

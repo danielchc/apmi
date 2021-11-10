@@ -71,7 +71,6 @@ function:
         | VAR POWEQ expression       { 
             ($1)->attr_value=pow(($1)->attr_value,$3);
         }
-        /* Variable sen inicializada, diferencios para poder mostrar unha mensaxe se a variable está sen inicializar */
         | VAR '=' expression       { 
             ($1)->attr_value=$3;
         }

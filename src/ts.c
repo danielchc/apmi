@@ -19,7 +19,8 @@ sys_fun_t sysfun[]={
 
 const_t consts[]={
 	{"pi",3.14159265358979323846},
-	{"e",2.71828}
+	{"e",2.71828},
+	{"aur",1.6180}
 };
 
 math_fun_t mathfun[]={
@@ -27,6 +28,7 @@ math_fun_t mathfun[]={
 	{"cos",cos},
 	{"tan",tan},
 	{"floor",floor},
+	{"ceil",ceil},
 	{"sqrt",sqrt},
 	{"log",log},
 	{"log10",log10},
@@ -36,6 +38,8 @@ math_fun_t mathfun[]={
 	{"acos",acos},
 	{"atan",atan},
 	{"sinh",sinh},
+	{"cosh",cosh},
+	{"tanh",tanh},
 };
 
 

@@ -37,14 +37,16 @@ program:
         ;
 
 statement:
-        expression  '\n'                    { 
-            if(echo) printf(">>> %.4f\n", $1);
+        '\n'{
             prompt();
         }
-        | function '\n'  {
-            prompt();
-        } 
-        | error '\n' {yyerrok; prompt();}
+        | expression                    { 
+            if(echo) printf(">>> %.4f\n", $1);
+        }
+        | function
+        | error {
+            yyerrok;
+        }
         ;
 function:
         | CONST '=' expression       { 

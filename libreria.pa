@@ -1,0 +1,3 @@
+import("/mnt/d/Dani/Escritorio/apmi/fibonnaci.so")
+external("fibonacci")
+exit()

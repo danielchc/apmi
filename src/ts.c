@@ -14,7 +14,8 @@ sys_fun_t sysfun[]={
 	{"load",ap_load},
 	{"import",ap_import},
 	{"cls",ap_cls},
-	{"echo",ap_echo}
+	{"echo",ap_echo},
+	{"external",ap_external}
 };
 
 const_t consts[]={

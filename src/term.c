@@ -1,5 +1,7 @@
 #include "term.h"
 
+void *plugin;
+
 void prompt(){
     if(yyget_in()==stdin)
         printf("\033[0;32mapmi> \033[0m");
@@ -98,14 +100,28 @@ void ap_load(char* filename){
 }
 
 void ap_import(char* filename){
-    printf("Librería %s\n",filename);
-    void *plugin;
+    printf("Intentando cargar librería %s\n",filename);
+   
     plugin = dlopen(filename, RTLD_NOW);
     if (!plugin){
         handle_generic_error("Non se puido cargar a librería %s", dlerror());
+    }else{
+        printf("Librería cargada correctamente\n");
     }
-    
+}
 
+void ap_external(char *name){
+    if(!plugin){
+        handle_generic_error("Non hai ningunha libreria cargada");
+        return;
+    }
+    double* (*fptr)()=dlsym(plugin, name);
+    if(!fptr){
+        handle_generic_error("Non se atopou a función %s\n",name);
+        return;
+    }
+    printf("%p\n",fptr);
+    printf("%p\n",(*fptr)(4));
 }
 
 void ap_echo(char* mode){

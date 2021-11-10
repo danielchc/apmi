@@ -110,19 +110,19 @@ doublequote                  "\""
 	fclose(yyin);
 	if ( --include_stack_ptr < 0) {
 		yyin=stdin;
+		yyrestart(yyin);
+		return '\n';
 	} else {
 		yy_delete_buffer(YY_CURRENT_BUFFER);
 		yy_switch_to_buffer(include_stack[include_stack_ptr]);
 	}
-	//return '\n';
+	
 }
 
 %%
 
 int yy_swap_buffer(char* filename){
-	if (include_stack_ptr >= MAX_INCLUDE_DEPTH) {
-        return -1;
-    }
+	if (include_stack_ptr >= MAX_INCLUDE_DEPTH) return -1;
     include_stack[include_stack_ptr++] = YY_CURRENT_BUFFER;
     FILE* f = fopen(filename, "r");
 	if (!f) return -2;

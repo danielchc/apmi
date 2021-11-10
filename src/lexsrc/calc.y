@@ -23,7 +23,7 @@
 }
 
 %token <num> NUMBER          
-%token <record> VAR VARUN CONST SYSFUN MATHFUN 
+%token <record> VAR CONST SYSFUN MATHFUN 
 %token <str> STRING
 
 %token ADDEQ SUBEQ MULEQ DIVEQ POWEQ;
@@ -38,7 +38,7 @@ program:
 
 statement:
         expression  '\n'                    { 
-            if(echo) printf(">>> %.2f\n", $1);
+            if(echo) printf(">>> %.4f\n", $1);
             prompt();
         }
         | function '\n'  {
@@ -71,6 +71,7 @@ function:
         | VAR POWEQ expression       { 
             ($1)->attr_value=pow(($1)->attr_value,$3);
         }
+        /* Variable sen inicializada, diferencios para poder mostrar unha mensaxe se a variable está sen inicializar */
         | VAR '=' expression       { 
             ($1)->attr_value=$3;
         }
@@ -85,10 +86,6 @@ expression:
         NUMBER
         | CONST                         { $$=($1)->attr_value; }
         | VAR                           { $$=($1)->attr_value; }
-        | VARUN                         {
-            if(echo) handle_generic_warning("Asumindo valor 0.0 para %s",yytext);
-            $$=($1)->attr_value; 
-        }
         | MATHFUN  '(' expression ')'   {  $$ = ($1->mfnctptr)($3); }
         | expression '+' expression     { $$ = $1 + $3; }
         | expression '-' expression     { $$ = $1 - $3; }

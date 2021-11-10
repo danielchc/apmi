@@ -871,7 +871,7 @@ YY_RULE_SETUP
 	int initialized;
 	yylval.str=strdup(yytext);
 	yylval.record=get_lexcomp(yytext,&initialized);
-	if((!initialized) && yylval.record->value==VAR) return VARUN;
+	if(!initialized) handle_generic_warning("Asumindo valor 0.0 para %s",yytext);
 	return (yylval.record->value);
 };
 	YY_BREAK

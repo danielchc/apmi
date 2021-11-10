@@ -1,7 +1,5 @@
 #include "term.h"
 
-
-
 void prompt(){
     if(yyget_in()==stdin)
         printf("\033[0;32mapmi> \033[0m");
@@ -50,13 +48,12 @@ void ap_help(){
 }
 
 void ap_load(char* filename){
-    FILE *f=fopen(filename,"r");
-    if(f==NULL){
-        handle_generic_error("Non se puido cargar o ficheiro %s",filename);
-        return;
+    int result=yy_swap_buffer(filename);
+    if(result==-1){
+        handle_generic_error("Non se pode cargar recursivamente tantos ficheiros");
+    }else if (result==-2){
+        handle_generic_error("Non se atopou o ficheiro %s\n",filename);
     }
-    printf("Cargando ficheiro %s\n",filename);
-    yyset_in(f);
 }
 
 void ap_import(char* filename){

@@ -13,6 +13,6 @@ int main(int argc, char* argv[]){
     init_ts();
     yyset_in(stdin);
     prompt();
-    while(1) yyparse();
+    yyparse();
 	return 0;
 }

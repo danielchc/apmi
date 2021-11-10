@@ -1,11 +1,14 @@
 %option nounput
 %option noinput
-%option noyywrap
 %{
     #include "ts.h"
     #include "y.tab.h"
     #include <stdlib.h>
+	#define MAX_INCLUDE_DEPTH 10
+	YY_BUFFER_STATE include_stack[MAX_INCLUDE_DEPTH];
+	int include_stack_ptr = 0;
     void yyerror(char *);
+	int yy_swap_buffer(char* filename);
 %}
 %x STRINGSIMPLE
 %x STRINGDOUBLE
@@ -74,10 +77,9 @@ doublequote                  "\""
                 return NUMBER;
             }
 
-[a-zA-Z]+      {
+[a-zA-Z]+[a-zA-Z0-9_]*      {
 		yylval.str=strdup(yytext);
 		yylval.record=get_lexcomp(yytext);
-		//printf("Tipo:%d\n",yylval.record->value);
 		return (yylval.record->value);
 };
 
@@ -89,22 +91,41 @@ doublequote                  "\""
 {diveq}           { return DIVEQ; }
 {poweq}           { return POWEQ; }
 
-[-+()=/*^]     	{ return *yytext; }
+[-+()=/*^]        { return *yytext; }
 
 
-[\n]     		{ return *yytext;  }
+[\n]     		  { return *yytext;  }
 
 [ \t]   ;       /* skip whitespace */
+[\r]   	;       /* skip whitespace */
 
-.               {}
+.               { return *yytext; }
 
 
 <<EOF>> {
-    fclose(yyin);
-    yyset_in(stdin);
-    yyrestart(yyin);
-    BEGIN(INITIAL);
-    return '\n';
+	fclose(yyin);
+	if ( --include_stack_ptr < 0) {
+		yyterminate();
+	} else {
+		yy_delete_buffer(YY_CURRENT_BUFFER);
+		yy_switch_to_buffer(include_stack[include_stack_ptr]);
+	}
 }
 
 %%
+
+int yy_swap_buffer(char* filename){
+	if (include_stack_ptr >= MAX_INCLUDE_DEPTH) {
+        return -1;
+    }
+    include_stack[include_stack_ptr++] = YY_CURRENT_BUFFER;
+    yyin = fopen(filename, "r");
+    
+    if (!yyin) return -2;
+    yy_switch_to_buffer(yy_create_buffer(yyin, YY_BUF_SIZE));
+    BEGIN(INITIAL);
+	return 0;
+}
+
+int yywrap() { return 1; }
+

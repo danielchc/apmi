@@ -3,8 +3,9 @@ OBJ_DIR := obj
 BIN_DIR := bin
 
 LEX_FILE := ./src/lex.yy.c
+LEX_HEADER := ./include/lex.yy.h
 TAB_FILE := ./src/y.tab.c
-TAB_HEADER:= ./src/y.tab.h
+TAB_HEADER:= ./include/y.tab.h
 
 
 EXE := $(BIN_DIR)/apmi
@@ -22,9 +23,9 @@ LDLIBS   := -lm -ldl
 all: lex bison $(EXE) 
 
 lex:
-	flex -o $(LEX_FILE) ./src/grammar.l
+	flex -o $(LEX_FILE) --header-file=$(LEX_HEADER) ./src/lexsrc/grammar.l 
 bison:
-	bison -dy -o $(TAB_FILE) ./src/calc.y && mv $(TAB_HEADER) include
+	bison -y -o $(TAB_FILE) --defines=$(TAB_HEADER) ./src/lexsrc/calc.y
 
 $(EXE): $(OBJ) | $(BIN_DIR)
 	$(CC) $^ $(LDLIBS) -o $@

@@ -33,6 +33,7 @@
 
 program:
         program statement '\n'
+        |error '\n'
         |
         ;
 
@@ -82,10 +83,6 @@ statement:
             (($1)->fnctptr)();
             prompt();
         }
-        |                      { 
-            prompt();
-        }
-
         ;
 expression:
         NUMBER
@@ -112,10 +109,11 @@ expression:
 %%
 
 void yyerror(char *s) {
-    handle_generic_error("Error sintaxis inválida: %s",s);
+    handle_generic_error("Error sintaxis inválida: %s -> %s %d",s,yytext,strlen(yytext));
     prompt();
 }
 
 void yyset_echo(int value){
     echo=value;
 }
+

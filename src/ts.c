@@ -132,12 +132,10 @@ ts_s get_ts(){
 	get_lexcomp
 		obten un simbolo da tabla e gardao se non existe
 */
-ts_record_t* get_lexcomp(char *lexcomp,int *initialized){
-	*initialized=1;
+ts_record_t* get_lexcomp(char *lexcomp){
 	ts_record_t *record=malloc(sizeof(record_t));
 	record=get_record(lexcomp,*ts);
 	if(!record){
-		*initialized=0;
 		return set_value(lexcomp,VAR,*ts);
 	}
 	return record;

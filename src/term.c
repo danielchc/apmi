@@ -46,6 +46,7 @@ void ap_workspace(){
 
 void ap_help(){
     printf("APMI - Interpete Matemático Axuda\n");
+    printf("Nota: As variables non inicializadas asumese que teñen de valor 0.0\n");
     printf("Comandos dispoñibles:\n");
     printf("\tclear()\t\t\tBorra as variables do espazo de traballo\n");
     printf("\tcls()\t\t\tLimpia a pantalla\n");
@@ -53,8 +54,9 @@ void ap_help(){
     printf("\tprint()\t\t\tImprime un string\n");
     printf("\texit()\t\t\tCerra a terminal (alias quit())\n");
     printf("\thelp()\t\t\tMostra esta axuda\n");
-    printf("\timport(arquivo)\t\tCarga unha liberia externa\n");
-    printf("\tload(arquivo)\t\tCarga unha script matemático\n");
+    printf("\timport(\"libreria\")\tCarga unha liberia externa\n");
+    printf("\texternal(\"funcion\")\tCarga unha función dunha libreria externa na táboa de símbolos\n");
+    printf("\tload(\"arquivo\")\t\tCarga unha script matemático\n");
     printf("\tquit()\t\t\tCerra a terminal (alias exit())\n");
     printf("\tworkspace()\t\tMostra as variables do espazo de traballo\n");
     printf("Funcións matemáticas dispoñibles:\n");
@@ -87,6 +89,11 @@ void ap_help(){
     printf("\t(a)\t\t\tParentesis\n");
     printf("\ta=b\t\t\tAsignación\n");
     printf("\ta[+ - * /]=b\t\tAsignación con operador\n\n");
+    printf("Podense cargar cantas liberías externas se queira, ca condición de referenciar todas as funcións que se queiran empregar co comando \"external()\" antes de importar outra \n");
+    printf("Como cargar funcións externas?\n");
+    printf("\t1. Primeiro importase a libreria con: import(\"/directorio/absoluto/ficheiro.so\")\n");
+    printf("\t2. A continuación cargase na táboa de símbolos empregando external(\"funcion\")\n");
+    printf("\t3. Chamase a función dende a terminal: funcion(valor)\n");
 }
 
 void ap_load(char* filename){

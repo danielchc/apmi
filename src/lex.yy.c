@@ -868,62 +868,60 @@ case 10:
 YY_RULE_SETUP
 #line 82 "./src/lexsrc/grammar.l"
 {
-	int initialized;
 	yylval.str=strdup(yytext);
-	yylval.record=get_lexcomp(yytext,&initialized);
-	if(!initialized && get_echo()) handle_generic_warning("Asumindo valor 0.0 para %s",yytext);
+	yylval.record=get_lexcomp(yytext);
 	return (yylval.record->value);
 };
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 92 "./src/lexsrc/grammar.l"
+#line 90 "./src/lexsrc/grammar.l"
 { return ADDEQ; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 93 "./src/lexsrc/grammar.l"
+#line 91 "./src/lexsrc/grammar.l"
 { return SUBEQ; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 94 "./src/lexsrc/grammar.l"
+#line 92 "./src/lexsrc/grammar.l"
 { return MULEQ; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 95 "./src/lexsrc/grammar.l"
+#line 93 "./src/lexsrc/grammar.l"
 { return DIVEQ; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 96 "./src/lexsrc/grammar.l"
+#line 94 "./src/lexsrc/grammar.l"
 { return POWEQ; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 98 "./src/lexsrc/grammar.l"
+#line 96 "./src/lexsrc/grammar.l"
 { return *yytext; }
 	YY_BREAK
 case 17:
 /* rule 17 can match eol */
 YY_RULE_SETUP
-#line 101 "./src/lexsrc/grammar.l"
+#line 99 "./src/lexsrc/grammar.l"
 { return *yytext;  }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 103 "./src/lexsrc/grammar.l"
+#line 101 "./src/lexsrc/grammar.l"
 ;       /* skip whitespace */
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 104 "./src/lexsrc/grammar.l"
+#line 102 "./src/lexsrc/grammar.l"
 ;       /* skip whitespace */
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 106 "./src/lexsrc/grammar.l"
+#line 104 "./src/lexsrc/grammar.l"
 { 
 		yyerror("Carácter no reconocido"); 
 }
@@ -931,7 +929,7 @@ YY_RULE_SETUP
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(STRINGSIMPLE):
 case YY_STATE_EOF(STRINGDOUBLE):
-#line 111 "./src/lexsrc/grammar.l"
+#line 109 "./src/lexsrc/grammar.l"
 {
 	fclose(yyin);
 	if ( --include_stack_ptr < 0) {
@@ -947,10 +945,10 @@ case YY_STATE_EOF(STRINGDOUBLE):
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 124 "./src/lexsrc/grammar.l"
+#line 122 "./src/lexsrc/grammar.l"
 ECHO;
 	YY_BREAK
-#line 954 "./src/lex.yy.c"
+#line 952 "./src/lex.yy.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1912,7 +1910,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 124 "./src/lexsrc/grammar.l"
+#line 122 "./src/lexsrc/grammar.l"
 
 
 

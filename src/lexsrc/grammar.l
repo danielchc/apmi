@@ -80,10 +80,8 @@ doublequote                  "\""
 };
 
 [a-zA-Z]+[a-zA-Z0-9_]*      {
-	int initialized;
 	yylval.str=strdup(yytext);
-	yylval.record=get_lexcomp(yytext,&initialized);
-	if(!initialized && get_echo()) handle_generic_warning("Asumindo valor 0.0 para %s",yytext);
+	yylval.record=get_lexcomp(yytext);
 	return (yylval.record->value);
 };
 

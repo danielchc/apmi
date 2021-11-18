@@ -49,6 +49,6 @@ int delete_ts();
 int clear_ts();
 ts_s get_ts();
 void add_math_fun(char* keyword, double (*mfnctptr)());
-ts_record_t* get_lexcomp(char *lexcomp,int *initialized);
+ts_record_t* get_lexcomp(char *lexcomp);
 
 #endif

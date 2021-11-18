@@ -89,11 +89,13 @@ statement:
             ($1)->attr_value=$3;
             if(yyget_in()==stdin) prompt();
         }
-        | SYSFUN '(' STRING ')'      {
+        | SYSFUN '(' STRING ')'  '\n'    {
             (($1)->fnctptr)($3);
+            if(yyget_in()==stdin) prompt();
         }
-        | SYSFUN '('')'       {
+        | SYSFUN '('')'   '\n'    {
             (($1)->fnctptr)();
+            if(yyget_in()==stdin) prompt();
         }
         | error '\n'{
             if(yyget_in()==stdin) prompt();

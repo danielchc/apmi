@@ -82,10 +82,20 @@ void load_symbols(){
 	}
 }
 
-void add_math_fun(char* keyword, double (*mfnctptr)()){
+/*
+	add_ext_fun
+		engade unha función dunha libreria a táboa de símbolos
+	return:
+		0 se engade
+		-1 se xa existe un simbolos co mesmo nome
+*/
+
+int add_ext_fun(char* keyword, double (*mfnctptr)()){
 	record_t* record;
+	if(key_exists(keyword,(*ts)))return -1;
     record=set_value(keyword,MATHFUN,(*ts));
     record->mfnctptr=mfnctptr;
+	return 0;
 }
 
 

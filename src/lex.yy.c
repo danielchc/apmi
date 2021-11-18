@@ -940,15 +940,16 @@ case YY_STATE_EOF(STRINGDOUBLE):
 		yy_delete_buffer(YY_CURRENT_BUFFER);
 		yy_switch_to_buffer(include_stack[include_stack_ptr]);
 	}
+	return '\n';
 	
 }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 122 "./src/lexsrc/grammar.l"
+#line 123 "./src/lexsrc/grammar.l"
 ECHO;
 	YY_BREAK
-#line 952 "./src/lex.yy.c"
+#line 953 "./src/lex.yy.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1910,7 +1911,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 122 "./src/lexsrc/grammar.l"
+#line 123 "./src/lexsrc/grammar.l"
 
 
 

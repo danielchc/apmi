@@ -33,5 +33,6 @@ int remove_value(char* key, hash_table_t* hash_table);
 int print_hash_table(hash_table_t* hash_table);
 int clear_hash_table(hash_table_t* hash_table);
 int delete_hash_table(hash_table_t** hash_table);
+int key_exists(char* key, hash_table_t* hash_table);
 
 #endif

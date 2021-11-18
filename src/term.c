@@ -128,8 +128,11 @@ void ap_external(char *name){
         handle_generic_error("Non se atopou a función %s",name);
         return;
     }
-    handle_generic_success("Añadida a función %s a táboa de símbolos",name);
-    add_math_fun(name,fptr);
+    if(add_ext_fun(name,fptr)!=-1){
+        handle_generic_success("Añadida a función %s a táboa de símbolos",name);
+    }else{
+        handle_generic_error("Xa existe un símbolo na táboa de simbolos co nome %s. Non se vai a cargar",name);
+    }
 
 }
 

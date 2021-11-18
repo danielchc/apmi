@@ -229,6 +229,30 @@ int get_value(char* key,ht_value_t* value, hash_table_t* hash_table){
 	return 0;
 }
 
+
+/*
+	get_value
+
+	param:  
+		char* key: clave a buscar
+		hash_table_t* hash_table: táboa na que buscar
+	return: 
+		se a clave existe devolve 1
+		se a clave non existe 0
+*/
+int key_exists(char* key, hash_table_t* hash_table){
+	//Se non existe a táboa da err
+	if(!key || !hash_table) return 0;
+	ht_size_t table_index = hash_function(key)%(hash_table->table_size);
+	record_t* link = hash_table->lists[table_index];
+	
+	while(link && strcmp(key, ((link)->key)) != 0){
+		link = link->next_link;
+	}
+	if(!link) return 0;
+	return 1;
+}
+
 record_t* get_record(char* key, hash_table_t* hash_table){
 	//Se non existe a táboa da err
 	if(!key || !hash_table) return NULL;

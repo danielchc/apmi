@@ -486,7 +486,7 @@ char *yytext;
 #line 1 "./src/lexsrc/grammar.l"
 #define YY_NO_INPUT 1
 #line 5 "./src/lexsrc/grammar.l"
-    #include "ts.h"
+    #include "term.h"
     #include "y.tab.h"
     #include "error_handler.h"
     #include <stdlib.h>
@@ -871,7 +871,7 @@ YY_RULE_SETUP
 	int initialized;
 	yylval.str=strdup(yytext);
 	yylval.record=get_lexcomp(yytext,&initialized);
-	if(!initialized) handle_generic_warning("Asumindo valor 0.0 para %s",yytext);
+	if(!initialized && get_echo()) handle_generic_warning("Asumindo valor 0.0 para %s",yytext);
 	return (yylval.record->value);
 };
 	YY_BREAK

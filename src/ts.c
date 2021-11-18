@@ -60,7 +60,7 @@ int init_ts(){
 
 /*
 	load_keywords
-		carga as palabras reservadas na táboa de simbolos
+		carga as palabras reservadas na táboa de símbolos
 */
 void load_symbols(){
 	uint i;
@@ -90,7 +90,7 @@ void add_math_fun(char* keyword, double (*mfnctptr)()){
 
 /*
 	print_ts
-		imprime a táboa de simbolos
+		imprime a táboa de símbolos
 */
 void print_ts(){
 	print_hash_table(*ts);
@@ -98,7 +98,7 @@ void print_ts(){
 
 /*
 	delete_ts
-		borra a táboa de simbolos
+		borra a táboa de símbolos
 	return:
 		se da erro -1
 		se non da erro 0
@@ -111,7 +111,7 @@ int delete_ts(){
 
 /*
 	clear_ts
-		borra a táboa de simbolos
+		borra a táboa de símbolos
 */
 int clear_ts(){
 	delete_hash_table(ts);
@@ -121,7 +121,7 @@ int clear_ts(){
 
 /*
 	get_ts
-		obten a táboa de simbolos
+		obten a táboa de símbolos
 */
 ts_s get_ts(){
 	return (*ts);

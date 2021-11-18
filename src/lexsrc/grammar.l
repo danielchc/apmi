@@ -2,7 +2,7 @@
 %option nounput
 %option noinput
 %{
-    #include "ts.h"
+    #include "term.h"
     #include "y.tab.h"
     #include "error_handler.h"
     #include <stdlib.h>
@@ -83,7 +83,7 @@ doublequote                  "\""
 	int initialized;
 	yylval.str=strdup(yytext);
 	yylval.record=get_lexcomp(yytext,&initialized);
-	if(!initialized) handle_generic_warning("Asumindo valor 0.0 para %s",yytext);
+	if(!initialized && get_echo()) handle_generic_warning("Asumindo valor 0.0 para %s",yytext);
 	return (yylval.record->value);
 };
 

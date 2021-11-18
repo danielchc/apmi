@@ -65,14 +65,14 @@
 #line 1 "./src/lexsrc/calc.y" /* yacc.c:339  */
 
     #include "ts.h"
-    #include "term.h"
     #include "error_handler.h"
     #include <stdio.h>
     #include <math.h>
     #include <stdlib.h>
+    #include "term.h"
+    #include "lex.yy.h"
     void yyerror(char *);
     int yylex(void);
-    int echo=1;
 
 #line 78 "./src/y.tab.c" /* yacc.c:339  */
 
@@ -1275,7 +1275,7 @@ yyreduce:
         case 4:
 #line 40 "./src/lexsrc/calc.y" /* yacc.c:1646  */
     {
-            prompt();
+           if(yyget_in()==stdin) prompt();
         }
 #line 1281 "./src/y.tab.c" /* yacc.c:1646  */
     break;
@@ -1283,7 +1283,7 @@ yyreduce:
   case 5:
 #line 43 "./src/lexsrc/calc.y" /* yacc.c:1646  */
     { 
-            if(echo) printf(">>> %.4f\n", (yyvsp[0].num));
+            if(get_echo()) printf(">>> %.4f\n", (yyvsp[0].num));
         }
 #line 1289 "./src/y.tab.c" /* yacc.c:1646  */
     break;
@@ -1686,9 +1686,5 @@ yyreturn:
 
 void yyerror(char *s) {
     handle_generic_error("Error sintaxis inválida: %s",s);
-}
-
-void yyset_echo(int value){
-    echo=value;
 }
 

@@ -1,13 +1,13 @@
 %{
     #include "ts.h"
-    #include "term.h"
     #include "error_handler.h"
     #include <stdio.h>
     #include <math.h>
     #include <stdlib.h>
+    #include "term.h"
+    #include "lex.yy.h"
     void yyerror(char *);
     int yylex(void);
-    int echo=1;
 %}
 
 %right '='
@@ -38,10 +38,10 @@ program:
 
 statement:
         '\n'{
-            prompt();
+           if(yyget_in()==stdin) prompt();
         }
         | expression                    { 
-            if(echo) printf(">>> %.4f\n", $1);
+            if(get_echo()) printf(">>> %.4f\n", $1);
         }
         | function
         | error {
@@ -109,9 +109,5 @@ expression:
 
 void yyerror(char *s) {
     handle_generic_error("Error sintaxis inválida: %s",s);
-}
-
-void yyset_echo(int value){
-    echo=value;
 }
 

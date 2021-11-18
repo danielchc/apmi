@@ -1,10 +1,10 @@
 #include "term.h"
 
 void *plugin;
+int echo=1;
 
 void prompt(){
-    if(yyget_in()==stdin)
-        printf("\033[0;32mapmi> \033[0m");
+    printf("\033[0;32mapmi> \033[0m");
 }
 
 void ap_exit(){
@@ -127,7 +127,7 @@ void ap_external(char *name){
         handle_generic_error("Non se atopou a función %s",name);
         return;
     }
-    handle_generic_success("Añadida a función %s a táboa de simbolos",name);
+    handle_generic_success("Añadida a función %s a táboa de símbolos",name);
     add_math_fun(name,fptr);
 
 }
@@ -135,10 +135,10 @@ void ap_external(char *name){
 void ap_echo(char* mode){
     if(strcmp(mode,"on")==0){
         printf("Echo activado\n");
-        yyset_echo(1);
+        echo=1;
     }else if(strcmp(mode,"off")==0){
         printf("Echo desactivado\n");
-        yyset_echo(0);
+        echo=0;
     }else{
         handle_generic_error("Modo de echo incorrecto");
     }
@@ -147,3 +147,8 @@ void ap_echo(char* mode){
 void ap_print(char* msg){
     printf("%s\n",msg);
 }
+
+int get_echo(){
+    return echo;
+}
+

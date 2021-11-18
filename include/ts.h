@@ -38,7 +38,7 @@ typedef record_t ts_record_t;
 
 #define HASHTABLE_SIZE 37
 
-// Defino o tipo táboa de simbolos como un hashmap
+// Defino o tipo táboa de símbolos como un hashmap
 typedef hash_table_t* ts_s;
 
 int init_ts();

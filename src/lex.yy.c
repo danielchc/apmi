@@ -924,14 +924,12 @@ YY_RULE_SETUP
 case 20:
 YY_RULE_SETUP
 #line 106 "./src/lexsrc/grammar.l"
-{ 
-		yyerror("Carácter no reconocido"); 
-}
+{ return *yytext; }
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(STRINGSIMPLE):
 case YY_STATE_EOF(STRINGDOUBLE):
-#line 111 "./src/lexsrc/grammar.l"
+#line 109 "./src/lexsrc/grammar.l"
 {
 	fclose(yyin);
 	if ( --include_stack_ptr < 0) {
@@ -947,10 +945,10 @@ case YY_STATE_EOF(STRINGDOUBLE):
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 124 "./src/lexsrc/grammar.l"
+#line 122 "./src/lexsrc/grammar.l"
 ECHO;
 	YY_BREAK
-#line 954 "./src/lex.yy.c"
+#line 952 "./src/lex.yy.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1912,7 +1910,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 124 "./src/lexsrc/grammar.l"
+#line 122 "./src/lexsrc/grammar.l"
 
 
 

@@ -103,9 +103,7 @@ doublequote                  "\""
 [ \t]   ;       /* skip whitespace */
 [\r]   	;       /* skip whitespace */
 
-.   { 
-		yyerror("Carácter no reconocido"); 
-}
+.               { return *yytext; }
 
 
 <<EOF>> {

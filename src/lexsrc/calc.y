@@ -45,6 +45,7 @@ statement:
         }
         | function
         | error {
+            yyerrok;
         }
         ;
 function:
@@ -56,9 +57,6 @@ function:
         }        
         | MATHFUN '=' expression       { 
             yyerror("Non se pode asignar un valor a unha función");
-        }
-        | SYSFUN '(' expression ')'       {
-            yyerror("Non se pode usar unha variable nunha función do sistema");
         }
         | VAR ADDEQ expression       { 
             ($1)->attr_value+=$3;

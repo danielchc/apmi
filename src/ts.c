@@ -15,7 +15,6 @@ sys_fun_t sysfun[]={
 	{"import",ap_import},
 	{"cls",ap_cls},
 	{"echo",ap_echo},
-	{"external",ap_external},
 	{"outmode",ap_outmode},
 	{"print",ap_print}
 };

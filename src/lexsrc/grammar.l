@@ -80,6 +80,14 @@ doublequote                  "\""
 };
 
 [a-zA-Z]+[a-zA-Z0-9_]*      {
+
+	double (*fptr)()=dlsym(get_plugin(), yytext);
+    if(fptr){
+        if(add_ext_fun(yytext,fptr)!=-1){
+        	handle_generic_success("Añadida a función %s a táboa de símbolos",yytext);
+    	}
+    }
+
 	yylval.str=strdup(yytext);
 	yylval.record=get_lexcomp(yytext);
 	return (yylval.record->value);

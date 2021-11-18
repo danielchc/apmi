@@ -23,10 +23,10 @@ void ap_help();
 void ap_load(char* filename);
 void ap_echo(char* mode);
 void ap_import(char* filename);
-void ap_external(char *name);
 void ap_print(char* msg);
 void ap_outmode(char* mode);
 int get_echo();
 term_out_t get_outmode();
+void* get_plugin();
 int yy_swap_buffer(char* filename);
 #endif

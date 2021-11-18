@@ -874,9 +874,9 @@ YY_RULE_SETUP
 		fptr=dlsym(aux->current, yytext);
 		if(fptr){
 			if(add_ext_fun(yytext,fptr)!=-1){
-				handle_generic_success("Añadida a función %s a táboa de símbolos, cargada dende: %s",yytext,aux->name);
+				//handle_generic_success("Añadida a función %s a táboa de símbolos, cargada dende: %s",yytext,aux->name);
+				break;
 			}
-			break;
 		}
 		aux=aux->next;
 	}

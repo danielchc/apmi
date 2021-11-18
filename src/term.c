@@ -10,7 +10,8 @@ void prompt(){
 }
 
 void ap_exit(){
-    clear_ts();
+    clear_libs();
+    delete_ts();
     printf("Adiós!\n");
     exit(0);
 }
@@ -23,16 +24,9 @@ void ap_cls(){
 }
 
 void ap_clear(){
-    if(linked_libs!=NULL){
-        linked_lib_t* aux=linked_libs;
-        while(aux->next!=NULL){
-            aux=aux->next;
-            free(linked_libs);
-            linked_libs=aux;
-        }
-    }
+    clear_libs();
     clear_ts();
-    handle_generic_success("Táboa de símbolos limpia");
+    if(echo) handle_generic_success("Táboa de símbolos limpia");
 }
 
 void ap_workspace(){
@@ -63,10 +57,13 @@ void ap_load(char* filename){
     }else if (result==-2){
         handle_generic_error("Non se atopou o ficheiro %s",filename);
     }
+    else{
+        if(echo) handle_generic_success("Ficheiro %s cargado",filename);
+    }
 }
 
 void ap_import(char* filename){
-    handle_generic_info("Intentando cargar librería %s",filename);
+    if(echo) handle_generic_info("Intentando cargar librería %s",filename);
     void* current_lib=dlopen(filename, RTLD_NOW);
     if (!current_lib){
         handle_generic_error("Non se puido cargar a librería %s", dlerror());
@@ -89,7 +86,7 @@ void ap_import(char* filename){
         aux->name=strdup(filename);
         aux->next=NULL;
     }
-    handle_generic_success("Librería cargada correctamente");
+    if(echo) handle_generic_success("Librería cargada correctamente");
 }
 
 
@@ -98,7 +95,6 @@ void ap_echo(char* mode){
         printf("Echo activado\n");
         echo=1;
     }else if(strcmp(mode,"off")==0){
-        printf("Echo desactivado\n");
         echo=0;
     }else{
         handle_generic_error("Modo de echo incorrecto");
@@ -107,10 +103,10 @@ void ap_echo(char* mode){
 
 void ap_outmode(char* mode){
     if(strcmp(mode,"dec")==0){
-        printf("Modo decimal\n");
+        if(echo) printf("Modo decimal\n");
         out_mode=DECIMAL;
     }else if(strcmp(mode,"sci")==0){
-        printf("Modo cientifico\n");
+        if(echo) printf("Modo cientifico\n");
         out_mode=SCIENTIFIC;
     }else{
         handle_generic_error("Modo decimal incorrecto");
@@ -168,6 +164,18 @@ void ap_help(){
     printf("\t(a)\t\t\tParentesis\n");
     printf("\ta=b\t\t\tAsignación\n");
     printf("\ta[+ - * /]=b\t\tAsignación con operador\n\n");
+}
+
+void clear_libs(){
+    if(linked_libs!=NULL){
+        linked_lib_t* aux=linked_libs;
+        while(aux->next!=NULL){
+            dlclose(aux->current);
+            aux=aux->next;
+            free(linked_libs);
+            linked_libs=aux;
+        }
+    }
 }
 
 int get_echo(){

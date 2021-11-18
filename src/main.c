@@ -10,7 +10,7 @@
 #include <limits.h>
 
 int main(int argc, char* argv[]){
-    printf("APMI - Interpete Matemático\nEscribe help() para obter axuda para obter axuda\n");
+    printf("APMI - Interpete Matemático\nEscribe help() para obter axuda para obter axuda\n\n");
     init_ts();
     yyset_in(stdin);
     if(argc > 1){

@@ -33,6 +33,7 @@ void ap_import(char* filename);
 void ap_print(char* msg);
 void ap_outmode(char* mode);
 int get_echo();
+void clear_libs();
 term_out_t get_outmode();
 linked_lib_t* get_linked_libs();
 int yy_swap_buffer(char* filename);

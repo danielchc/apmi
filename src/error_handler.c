@@ -49,7 +49,7 @@ void handle_lexical_error(error_t error,char * info){
 */
 void handle_generic_error(char* error,...){
 	char msg[200];
-	strcpy(msg,"\033[1;31mERROR:");
+	strcpy(msg,"\033[1;31m[ERROR]\t");
 	strcat(msg,error);
 	strcat(msg,"\033[0m\n");
 	va_list args;
@@ -66,7 +66,7 @@ void handle_generic_error(char* error,...){
 */
 void handle_generic_warning(char* warning,...){
 	char msg[200];
-	strcpy(msg,"\033[1;33mADVERTENCIA:");
+	strcpy(msg,"\033[1;33m[ADVERTENCIA]\t");
 	strcat(msg,warning);
 	strcat(msg,"\033[0m\n");
 	va_list args;
@@ -83,7 +83,7 @@ void handle_generic_warning(char* warning,...){
 */
 void handle_generic_success(char* success,...){
 	char msg[200];
-	strcpy(msg,"\033[1;32mOK:");
+	strcpy(msg,"\033[1;32m[OK]\t");
 	strcat(msg,success);
 	strcat(msg,"\033[0m\n");
 	va_list args;
@@ -94,7 +94,7 @@ void handle_generic_success(char* success,...){
 
 void handle_generic_info(char* info,...){
 	char msg[200];
-	strcpy(msg,"INFO:");
+	strcpy(msg,"[INFO]\t");
 	strcat(msg,info);
 	strcat(msg,"\n");
 	va_list args;

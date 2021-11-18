@@ -868,13 +868,18 @@ case 10:
 YY_RULE_SETUP
 #line 82 "./src/lexsrc/grammar.l"
 {
-
-	double (*fptr)()=dlsym(get_plugin(), yytext);
-    if(fptr){
-        if(add_ext_fun(yytext,fptr)!=-1){
-        	handle_generic_success("Añadida a función %s a táboa de símbolos",yytext);
-    	}
-    }
+	double (*fptr)();
+	linked_lib_t* aux=get_linked_libs();
+	while(aux && aux->next!=NULL){
+		fptr=dlsym(aux->current, yytext);
+		if(fptr){
+			if(add_ext_fun(yytext,fptr)!=-1){
+				handle_generic_success("Añadida a función %s a táboa de símbolos, cargada dende: %s",yytext,aux->name);
+			}
+			break;
+		}
+		aux=aux->next;
+	}
 
 	yylval.str=strdup(yytext);
 	yylval.record=get_lexcomp(yytext);
@@ -883,53 +888,53 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 98 "./src/lexsrc/grammar.l"
+#line 103 "./src/lexsrc/grammar.l"
 { return ADDEQ; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 99 "./src/lexsrc/grammar.l"
+#line 104 "./src/lexsrc/grammar.l"
 { return SUBEQ; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 100 "./src/lexsrc/grammar.l"
+#line 105 "./src/lexsrc/grammar.l"
 { return MULEQ; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 101 "./src/lexsrc/grammar.l"
+#line 106 "./src/lexsrc/grammar.l"
 { return DIVEQ; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 102 "./src/lexsrc/grammar.l"
+#line 107 "./src/lexsrc/grammar.l"
 { return POWEQ; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 104 "./src/lexsrc/grammar.l"
+#line 109 "./src/lexsrc/grammar.l"
 { return *yytext; }
 	YY_BREAK
 case 17:
 /* rule 17 can match eol */
 YY_RULE_SETUP
-#line 107 "./src/lexsrc/grammar.l"
+#line 112 "./src/lexsrc/grammar.l"
 { return *yytext;  }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 109 "./src/lexsrc/grammar.l"
+#line 114 "./src/lexsrc/grammar.l"
 ;       /* skip whitespace */
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 110 "./src/lexsrc/grammar.l"
+#line 115 "./src/lexsrc/grammar.l"
 ;       /* skip whitespace */
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 112 "./src/lexsrc/grammar.l"
+#line 117 "./src/lexsrc/grammar.l"
 { 
 		return *yytext;
 }
@@ -937,7 +942,7 @@ YY_RULE_SETUP
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(STRINGSIMPLE):
 case YY_STATE_EOF(STRINGDOUBLE):
-#line 117 "./src/lexsrc/grammar.l"
+#line 122 "./src/lexsrc/grammar.l"
 {
 	fclose(yyin);
 	if ( --include_stack_ptr < 0) {
@@ -954,10 +959,10 @@ case YY_STATE_EOF(STRINGDOUBLE):
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 131 "./src/lexsrc/grammar.l"
+#line 136 "./src/lexsrc/grammar.l"
 ECHO;
 	YY_BREAK
-#line 961 "./src/lex.yy.c"
+#line 966 "./src/lex.yy.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1919,7 +1924,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 131 "./src/lexsrc/grammar.l"
+#line 136 "./src/lexsrc/grammar.l"
 
 
 

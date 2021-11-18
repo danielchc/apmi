@@ -13,6 +13,13 @@ typedef enum {
 	SCIENTIFIC
 } term_out_t;
 
+struct linked_lib_s;
+typedef struct linked_lib_s{
+	void* current;
+	char* name;
+	struct linked_lib_s *next;
+}linked_lib_t;
+
 void prompt();
 void ap_exit();
 void ap_ts();
@@ -27,6 +34,6 @@ void ap_print(char* msg);
 void ap_outmode(char* mode);
 int get_echo();
 term_out_t get_outmode();
-void* get_plugin();
+linked_lib_t* get_linked_libs();
 int yy_swap_buffer(char* filename);
 #endif

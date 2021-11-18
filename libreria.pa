@@ -1,7 +1,0 @@
-import("/mnt/d/Dani/Escritorio/apmi/libreriamatematica.so")
-external("fibonacci")
-external("get_next_prime")
-print("Calculando fibonacci de 9")
-fibonacci(9)
-print("Primo seguinte de 90")
-get_next_prime(90)

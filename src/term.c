@@ -1,6 +1,7 @@
 #include "term.h"
 
-void *plugin;
+linked_lib_t* linked_libs;
+
 int echo=1;
 term_out_t out_mode=DECIMAL;
 
@@ -9,6 +10,7 @@ void prompt(){
 }
 
 void ap_exit(){
+    clear_ts();
     printf("Adiós!\n");
     exit(0);
 }
@@ -21,6 +23,14 @@ void ap_cls(){
 }
 
 void ap_clear(){
+    if(linked_libs!=NULL){
+        linked_lib_t* aux=linked_libs;
+        while(aux->next!=NULL){
+            aux=aux->next;
+            free(linked_libs);
+            linked_libs=aux;
+        }
+    }
     clear_ts();
     handle_generic_success("Táboa de símbolos limpia");
 }
@@ -44,6 +54,74 @@ void ap_workspace(){
 	}
     if(sym_count==0)printf("Non hai variables almacenadas no workspace\n");
 }
+
+
+void ap_load(char* filename){
+    int result=yy_swap_buffer(filename);
+    if(result==-1){
+        handle_generic_error("Non se pode cargar recursivamente tantos ficheiros");
+    }else if (result==-2){
+        handle_generic_error("Non se atopou o ficheiro %s",filename);
+    }
+}
+
+void ap_import(char* filename){
+    handle_generic_info("Intentando cargar librería %s",filename);
+    void* current_lib=dlopen(filename, RTLD_NOW);
+    if (!current_lib){
+        handle_generic_error("Non se puido cargar a librería %s", dlerror());
+        return;
+    }
+
+    if(linked_libs==NULL){
+        linked_libs=malloc(sizeof(linked_lib_t));
+        linked_libs->next=NULL;
+        linked_libs->current=current_lib;
+        linked_libs->name=strdup(filename);
+    }else{
+        linked_lib_t* aux=linked_libs;
+        while(aux->next!=NULL){
+            aux=aux->next;
+        }
+        aux->next=malloc(sizeof(linked_lib_t));
+        aux=aux->next;
+        aux->current=current_lib;
+        aux->name=strdup(filename);
+        aux->next=NULL;
+    }
+    handle_generic_success("Librería cargada correctamente");
+}
+
+
+void ap_echo(char* mode){
+    if(strcmp(mode,"on")==0){
+        printf("Echo activado\n");
+        echo=1;
+    }else if(strcmp(mode,"off")==0){
+        printf("Echo desactivado\n");
+        echo=0;
+    }else{
+        handle_generic_error("Modo de echo incorrecto");
+    }
+}
+
+void ap_outmode(char* mode){
+    if(strcmp(mode,"dec")==0){
+        printf("Modo decimal\n");
+        out_mode=DECIMAL;
+    }else if(strcmp(mode,"sci")==0){
+        printf("Modo cientifico\n");
+        out_mode=SCIENTIFIC;
+    }else{
+        handle_generic_error("Modo decimal incorrecto");
+    }
+}
+
+void ap_print(char* msg){
+    printf("%s\n",msg);
+}
+
+
 
 void ap_help(){
     printf("APMI - Interpete Matemático Axuda\n");
@@ -92,55 +170,6 @@ void ap_help(){
     printf("\ta[+ - * /]=b\t\tAsignación con operador\n\n");
 }
 
-void ap_load(char* filename){
-    int result=yy_swap_buffer(filename);
-    if(result==-1){
-        handle_generic_error("Non se pode cargar recursivamente tantos ficheiros");
-    }else if (result==-2){
-        handle_generic_error("Non se atopou o ficheiro %s",filename);
-    }
-}
-
-void ap_import(char* filename){
-    handle_generic_info("Intentando cargar librería %s",filename);
-   
-    plugin = dlopen(filename, RTLD_NOW);
-    if (!plugin){
-        handle_generic_error("Non se puido cargar a librería %s", dlerror());
-    }else{
-        handle_generic_success("Librería cargada correctamente");
-    }
-}
-
-
-void ap_echo(char* mode){
-    if(strcmp(mode,"on")==0){
-        printf("Echo activado\n");
-        echo=1;
-    }else if(strcmp(mode,"off")==0){
-        printf("Echo desactivado\n");
-        echo=0;
-    }else{
-        handle_generic_error("Modo de echo incorrecto");
-    }
-}
-
-void ap_outmode(char* mode){
-    if(strcmp(mode,"dec")==0){
-        printf("Modo decimal\n");
-        out_mode=DECIMAL;
-    }else if(strcmp(mode,"sci")==0){
-        printf("Modo cientifico\n");
-        out_mode=SCIENTIFIC;
-    }else{
-        handle_generic_error("Modo decimal incorrecto");
-    }
-}
-
-void ap_print(char* msg){
-    printf("%s\n",msg);
-}
-
 int get_echo(){
     return echo;
 }
@@ -149,7 +178,7 @@ term_out_t get_outmode(){
     return out_mode;
 }
 
-void* get_plugin(){
-    return plugin;
+linked_lib_t* get_linked_libs(){
+    return linked_libs;
 }
 

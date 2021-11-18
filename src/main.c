@@ -10,17 +10,17 @@
 #include <limits.h>
 
 int main(int argc, char* argv[]){
-    printf("APMI - Interpete Matemático\nEscribe help() para obter axuda para obter axuda\n\n");
     init_ts();
     yyset_in(stdin);
     if(argc > 1){
         FILE *f=fopen(argv[1],"r");
         if(!f){
-            printf("Error: No se puido abrir o arquivo %s\n",argv[1]);
+            handle_generic_error("No se puido abrir o arquivo %s\n",argv[1]);
             return 1;
         }
         yyset_in(f);
     }
+    printf("APMI - Interpete Matemático\nEscribe help() para obter axuda para obter axuda\n\n");
     if(yyget_in()==stdin) prompt();
     yyparse();
 	return 0;

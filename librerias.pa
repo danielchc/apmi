@@ -1,5 +1,0 @@
-echo("off")
-import("/mnt/d/Dani/Escritorio/apmi/examples/lm1.so")
-import("/mnt/d/Dani/Escritorio/apmi/examples/lm2.so")
-import("/mnt/d/Dani/Escritorio/apmi/examples/lm3.so")
-fibonacci(3)

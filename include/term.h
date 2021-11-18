@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <dlfcn.h>
+#include <unistd.h>
 #include "ts.h"
 #include "y.tab.h"
 #include "error_handler.h"

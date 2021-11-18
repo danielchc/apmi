@@ -39,7 +39,7 @@ void ap_workspace(){
 			record_t* head=ts->lists[i];
 			while(head){   
                 if(head->value==VAR){
-				    printf("%s=%f\n", head->key, head->attr_value);
+				    printf("%s\t=\t%f\n", head->key, head->attr_value);
                     sym_count++;
                 }
 				head = head->next_link; 
@@ -63,7 +63,16 @@ void ap_load(char* filename){
 }
 
 void ap_import(char* filename){
+    char cwd[PATH_MAX];
     if(echo) handle_generic_info("Intentando cargar librería %s",filename);
+
+    if(filename[0]!='/'){
+        if (getcwd(cwd, sizeof(cwd)) != NULL) {
+            strcat(cwd,"/");
+            filename=strcat(cwd,filename);
+        }
+    }
+
     void* current_lib=dlopen(filename, RTLD_NOW);
     if (!current_lib){
         handle_generic_error("Non se puido cargar a librería %s", dlerror());
@@ -129,7 +138,7 @@ void ap_help(){
     printf("\tprint()\t\t\tImprime un string\n");
     printf("\texit()\t\t\tCerra a terminal (alias quit())\n");
     printf("\thelp()\t\t\tMostra esta axuda\n");
-    printf("\timport(\"libreria\")\tCarga unha liberia externa\n");
+    printf("\timport(\"libreria\")\tCarga unha liberia externa, recibe como argumento a ruta absoluta do ficheiro\n");
     printf("\tload(\"arquivo\")\t\tCarga unha script matemático\n");
     printf("\toutmode(\"sci\"/\"dec\")\t\t\tFormato da salida: sci->formato cientifico;dec-> formato decimal\n");
     printf("\tquit()\t\t\tCerra a terminal (alias exit())\n");

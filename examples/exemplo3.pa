@@ -1,0 +1,19 @@
+#Mostro o espacio de traballo
+workspace()
+#Borro a taboa de simbolos
+clear()
+#Mostro o espacio de traballo
+workspace()
+outmode("dec")
+10e10
+#Cambio a modo cientifico
+outmode("sci")
+10e10
+tan(90)
+atan(90)
+10
+#Intento dividir un numero entre 0
+print("!!!!!!!!!!!	Intentando dividir entre 0 	!!!!!!!!!!!")
+3/0
+#Cerro a aplicación
+exit()

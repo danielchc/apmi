@@ -1,0 +1,17 @@
+help()
+
+#Cargo as liberias
+import("./examples/lm1.so")
+import("./examples/lm2.so")
+import("./examples/lm3.so")
+
+#Emprego funcións das liberias
+fibonacci(3)
+a(90)
+b(90)
+c(90)
+d(90)
+e(90)
+f(90)
+#Cargo outro script
+load("./examples/exemplo2.pa")

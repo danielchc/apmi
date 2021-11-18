@@ -14,6 +14,7 @@
 %}
 %x STRINGSIMPLE
 %x STRINGDOUBLE
+comment                     "#"[^\n]*
 digit                       ([0-9]_?)+
 exp                         [eE][+-]?{digit}+
 integer                     {digit}{exp}?
@@ -111,8 +112,9 @@ doublequote                  "\""
 
 [\n]     		  { return *yytext;  }
 
-[ \t]   ;       /* skip whitespace */
-[\r]   	;       /* skip whitespace */
+[ \t]   		;      
+[\r]   			;      
+{comment}   	;      
 
 .   { 
 		return *yytext;

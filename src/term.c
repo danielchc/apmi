@@ -2,6 +2,7 @@
 
 void *plugin;
 int echo=1;
+term_out_t out_mode=DECIMAL;
 
 void prompt(){
     printf("\033[0;32mapmi> \033[0m");
@@ -51,12 +52,13 @@ void ap_help(){
     printf("\tclear()\t\t\tBorra as variables do espazo de traballo\n");
     printf("\tcls()\t\t\tLimpia a pantalla\n");
     printf("\techo(\"on\"/\"off\")\tActiva ou desactiva o imprimir por pantalla\n");
+    printf("\texternal(\"funcion\")\tCarga unha función dunha libreria externa na táboa de símbolos\n");
     printf("\tprint()\t\t\tImprime un string\n");
     printf("\texit()\t\t\tCerra a terminal (alias quit())\n");
     printf("\thelp()\t\t\tMostra esta axuda\n");
     printf("\timport(\"libreria\")\tCarga unha liberia externa\n");
-    printf("\texternal(\"funcion\")\tCarga unha función dunha libreria externa na táboa de símbolos\n");
     printf("\tload(\"arquivo\")\t\tCarga unha script matemático\n");
+    printf("\toutmode(\"sci\"/\"dec\")\t\t\tFormato da salida: sci->formato cientifico;dec-> formato decimal\n");
     printf("\tquit()\t\t\tCerra a terminal (alias exit())\n");
     printf("\tworkspace()\t\tMostra as variables do espazo de traballo\n");
     printf("Funcións matemáticas dispoñibles:\n");
@@ -143,11 +145,26 @@ void ap_echo(char* mode){
     }
 }
 
+void ap_outmode(char* mode){
+    if(strcmp(mode,"dec")==0){
+        printf("Modo decimal\n");
+        out_mode=DECIMAL;
+    }else if(strcmp(mode,"sci")==0){
+        printf("Modo cientifico\n");
+        out_mode=SCIENTIFIC;
+    }else{
+        handle_generic_error("Modo decimal incorrecto");
+    }
+}
+
 void ap_print(char* msg){
     printf("%s\n",msg);
 }
 
 int get_echo(){
     return echo;
+}
+term_out_t get_outmode(){
+    return out_mode;
 }
 

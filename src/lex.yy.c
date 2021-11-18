@@ -923,7 +923,7 @@ case 20:
 YY_RULE_SETUP
 #line 104 "./src/lexsrc/grammar.l"
 { 
-		yyerror("Carácter no reconocido"); 
+		return *yytext;
 }
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):

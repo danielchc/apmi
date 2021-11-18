@@ -21,7 +21,7 @@ int main(int argc, char* argv[]){
         }
         yyset_in(f);
     }
-    prompt();
+    if(yyget_in()==stdin) prompt();
     yyparse();
 	return 0;
 }

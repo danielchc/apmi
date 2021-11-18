@@ -32,57 +32,71 @@
 %%
 
 program:
-        program statement
         |
+        program statement
         ;
 
 statement:
         '\n'{
            if(yyget_in()==stdin) prompt();
         }
-        | expression                    { 
-            if(get_echo()) printf(">>> %.4f\n", $1);
+        | expression  '\n'                  { 
+            if(get_echo()) {
+                if(get_outmode()==DECIMAL) printf(">>> %.4f\n", $1);
+                else if (get_outmode()==SCIENTIFIC) printf(">>> %.4g\n", $1);
+            }
+            if(yyget_in()==stdin) prompt();
         }
-        | function
-        | error {
-        }
-        ;
-function:
-        | CONST '=' expression       { 
+        | CONST '=' expression '\n'     { 
             yyerror("Non se pode asignar un valor a unha constante");
+            if(yyget_in()==stdin) prompt();
+
         }        
-        | SYSFUN '=' expression       { 
+        | SYSFUN '=' expression  '\n'     { 
             yyerror("Non se pode asignar un valor a unha función");
+            if(yyget_in()==stdin) prompt();
+            
         }        
-        | MATHFUN '=' expression       { 
+        | MATHFUN '=' expression  '\n'     { 
             yyerror("Non se pode asignar un valor a unha función");
+            if(yyget_in()==stdin) prompt();
         }
-        | SYSFUN '(' expression ')'       {
+        | SYSFUN '(' expression ')' '\n'      {
             yyerror("Non se pode usar unha variable nunha función do sistema");
+            if(yyget_in()==stdin) prompt();
         }
-        | VAR ADDEQ expression       { 
+        | VAR ADDEQ expression   '\n'    { 
             ($1)->attr_value+=$3;
+            if(yyget_in()==stdin) prompt();
         }        
-        | VAR SUBEQ expression       { 
+        | VAR SUBEQ expression   '\n'    { 
             ($1)->attr_value-=$3;
+            if(yyget_in()==stdin) prompt();
         }        
-        | VAR MULEQ expression       { 
+        | VAR MULEQ expression   '\n'    { 
             ($1)->attr_value*=$3;
+            if(yyget_in()==stdin) prompt();
         }        
-        | VAR DIVEQ expression       { 
+        | VAR DIVEQ expression   '\n'    { 
             ($1)->attr_value/=$3;
+            if(yyget_in()==stdin) prompt();
         }
-        | VAR POWEQ expression       { 
+        | VAR POWEQ expression    '\n'   { 
             ($1)->attr_value=pow(($1)->attr_value,$3);
+            if(yyget_in()==stdin) prompt();
         }
-        | VAR '=' expression       { 
+        | VAR '=' expression      '\n' { 
             ($1)->attr_value=$3;
+            if(yyget_in()==stdin) prompt();
         }
-        | SYSFUN '(' STRING ')'       {
+        | SYSFUN '(' STRING ')'      {
             (($1)->fnctptr)($3);
         }
         | SYSFUN '('')'       {
             (($1)->fnctptr)();
+        }
+        | error '\n'{
+            if(yyget_in()==stdin) prompt();
         }
         ;
 expression:

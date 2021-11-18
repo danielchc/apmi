@@ -8,6 +8,11 @@
 #include "y.tab.h"
 #include "error_handler.h"
 
+typedef enum {
+	DECIMAL,
+	SCIENTIFIC
+} term_out_t;
+
 void prompt();
 void ap_exit();
 void ap_ts();
@@ -20,6 +25,8 @@ void ap_echo(char* mode);
 void ap_import(char* filename);
 void ap_external(char *name);
 void ap_print(char* msg);
+void ap_outmode(char* mode);
 int get_echo();
+term_out_t get_outmode();
 int yy_swap_buffer(char* filename);
 #endif

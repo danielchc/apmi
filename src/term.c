@@ -53,9 +53,8 @@ void ap_help(){
     printf("\tprint()\t\t\tImprime un string\n");
     printf("\texit()\t\t\tCerra a terminal (alias quit())\n");
     printf("\thelp()\t\t\tMostra esta axuda\n");
-    printf("\timport(\"libreria\")\t\tCarga unha liberia externa\n");
-    printf("\texternal(\"funcion\")\t\tCarga unha función dunha libreria externa na táboa de símbolos\n");
-    printf("\tload(\"arquivo\")\t\tCarga unha script matemático\n");
+    printf("\timport(arquivo)\t\tCarga unha liberia externa\n");
+    printf("\tload(arquivo)\t\tCarga unha script matemático\n");
     printf("\tquit()\t\t\tCerra a terminal (alias exit())\n");
     printf("\tworkspace()\t\tMostra as variables do espazo de traballo\n");
     printf("Funcións matemáticas dispoñibles:\n");
@@ -88,13 +87,6 @@ void ap_help(){
     printf("\t(a)\t\t\tParentesis\n");
     printf("\ta=b\t\t\tAsignación\n");
     printf("\ta[+ - * /]=b\t\tAsignación con operador\n\n");
-
-    printf("Como cargar funcións externas?\n");
-    printf("\t1. import(\"/directorio/absoluto/ficheiro.so\")\n");
-    printf("\t2. external(\"funcion\")\n");
-    printf("\t3. funcion(valor)\n");
-
-
 }
 
 void ap_load(char* filename){

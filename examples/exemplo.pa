@@ -1,0 +1,32 @@
+help()
+
+
+#Cargo as liberias
+import("./examples/lm1.so")
+
+#Establezco o directorio de traballo en examples
+setwd("examples")
+
+#Importo dende o directorio actual
+import("lm2.so")
+import("lm3.so")
+workspace()
+
+#Emprego funcións das liberias
+print("Fibonacci de 3")
+fibonacci(3)
+
+print("Area circulo 9")
+area_circulo(9)
+print("Diametro circulo 15.5")
+diametro_circulo(15.5)
+
+print("Area esfera 4")
+area_esfera(4)
+
+print("Volumen esfera 4.5")
+volumen_esfera(4.5)
+
+workspace()
+#Cargo outro script
+load("exemplo2.pa")

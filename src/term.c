@@ -181,10 +181,11 @@ void ap_help(){
     printf("\ta-b\t\t\tResta\n");
     printf("\ta*b\t\t\tMultiplicación\n");
     printf("\ta/b\t\t\tDivisión\n");
+    printf("\ta%%b\t\t\tMódulo\n");
     printf("\ta^b\t\t\tPotencia\n");
     printf("\t(a)\t\t\tParentesis\n");
     printf("\ta=b\t\t\tAsignación\n");
-    printf("\ta[+ - * /]=b\t\tAsignación con operador\n\n");
+    printf("\ta[+ - * / %%]=b\t\tAsignación con operador\n\n");
 }
 
 void clear_libs(){

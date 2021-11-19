@@ -16,7 +16,8 @@ sys_fun_t sysfun[]={
 	{"cls",ap_cls},
 	{"echo",ap_echo},
 	{"outmode",ap_outmode},
-	{"print",ap_print}
+	{"print",ap_print},
+	{"libs",ap_libs}
 };
 
 const_t consts[]={
@@ -149,4 +150,17 @@ ts_record_t* get_lexcomp(char *lexcomp){
 		return set_value(lexcomp,VAR,*ts);
 	}
 	return record;
+}
+
+/*
+	keyword_exist_ts
+	param:  
+		char* key: clave a buscar
+	return: 
+		se a clave existe devolve 1
+		se a clave non existe 0
+*/
+
+int keyword_exist_ts(char* keyword){
+	return key_exists(keyword,(*ts));
 }

@@ -15,5 +15,3 @@ atan(90)
 #Intento dividir un numero entre 0
 print("!!!!!!!!!!!	Intentando dividir entre 0 	!!!!!!!!!!!")
 3/0
-#Cerro a aplicación
-exit()

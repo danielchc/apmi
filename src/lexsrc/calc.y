@@ -12,7 +12,7 @@
 
 %right '='
 %left '-' '+'
-%left '*' '/'
+%left '*' '/' '%'
 %right '^'
 %nonassoc UMINUS
 

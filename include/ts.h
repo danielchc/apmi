@@ -48,6 +48,7 @@ void print_ts();
 int delete_ts();
 int clear_ts();
 ts_s get_ts();
+int keyword_exist_ts(char* keyword);
 int add_ext_fun(char* keyword, double (*mfnctptr)());
 ts_record_t* get_lexcomp(char *lexcomp);
 

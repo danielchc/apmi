@@ -367,11 +367,11 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[54] =
     {   0,
-        0,    0,    0,    0,    0,    0,   24,   22,   19,   18,
-       20,    5,   21,   22,    1,   17,   17,   17,   17,   22,
-       17,    9,   10,   17,    3,    4,    2,    7,    8,    6,
-       21,   16,   13,   11,   12,    9,   14,    0,    9,    0,
-        9,   10,   10,   15,    0,    9,    0,    9,    0,    9,
+        0,    0,    0,    0,    0,    0,   24,   22,   20,   19,
+       21,    5,   11,   18,    1,   18,   18,   18,   18,   22,
+       18,    9,   10,   18,    3,    4,    2,    7,    8,    6,
+       11,   17,   14,   12,   13,    9,   15,    0,    9,    0,
+        9,   10,   10,   16,    0,    9,    0,    9,    0,    9,
         9,    9,    0
     } ;
 
@@ -863,18 +863,19 @@ case 10:
 YY_RULE_SETUP
 #line 84 "./src/lexsrc/grammar.l"
 {
-	double (*fptr)();
-	linked_lib_t* aux=get_linked_libs();
-	while(aux && aux->next!=NULL){
-		fptr=dlsym(aux->current, yytext);
-		if(fptr){
-			if(add_ext_fun(yytext,fptr)!=-1){
-				//handle_generic_success("Añadida a función %s a táboa de símbolos, cargada dende: %s",yytext,aux->name);
+
+	if(!keyword_exist_ts(yytext)){
+		double (*fptr)();
+		linked_lib_t* aux=get_linked_libs();
+		while(aux!=NULL){
+			fptr=dlsym(aux->current, yytext);
+			if(fptr && (add_ext_fun(yytext,fptr)!=-1)){
 				break;
 			}
-		}
-		aux=aux->next;
+			aux=aux->next;
+		};
 	}
+	
 
 	yylval.str=strdup(yytext);
 	yylval.record=get_lexcomp(yytext);
@@ -884,48 +885,48 @@ YY_RULE_SETUP
 case 11:
 YY_RULE_SETUP
 #line 105 "./src/lexsrc/grammar.l"
-{ return ADDEQ; }
+;     
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 106 "./src/lexsrc/grammar.l"
-{ return SUBEQ; }
+{ return ADDEQ; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
 #line 107 "./src/lexsrc/grammar.l"
-{ return MULEQ; }
+{ return SUBEQ; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 108 "./src/lexsrc/grammar.l"
-{ return DIVEQ; }
+{ return MULEQ; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 109 "./src/lexsrc/grammar.l"
-{ return POWEQ; }
+{ return DIVEQ; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 110 "./src/lexsrc/grammar.l"
-{ return MODEQ; }
+{ return POWEQ; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 112 "./src/lexsrc/grammar.l"
-{ return *yytext; }
+#line 111 "./src/lexsrc/grammar.l"
+{ return MODEQ; }
 	YY_BREAK
 case 18:
-/* rule 18 can match eol */
 YY_RULE_SETUP
-#line 115 "./src/lexsrc/grammar.l"
-{ return *yytext;  }
+#line 113 "./src/lexsrc/grammar.l"
+{ return *yytext; }
 	YY_BREAK
 case 19:
+/* rule 19 can match eol */
 YY_RULE_SETUP
-#line 117 "./src/lexsrc/grammar.l"
-;      
+#line 116 "./src/lexsrc/grammar.l"
+{ return *yytext;  }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
@@ -939,7 +940,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 121 "./src/lexsrc/grammar.l"
+#line 122 "./src/lexsrc/grammar.l"
 { 
 		return *yytext;
 }
@@ -947,7 +948,7 @@ YY_RULE_SETUP
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(STRINGSIMPLE):
 case YY_STATE_EOF(STRINGDOUBLE):
-#line 126 "./src/lexsrc/grammar.l"
+#line 127 "./src/lexsrc/grammar.l"
 {
 	fclose(yyin);
 	if ( --include_stack_ptr < 0) {
@@ -964,10 +965,10 @@ case YY_STATE_EOF(STRINGDOUBLE):
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 140 "./src/lexsrc/grammar.l"
+#line 141 "./src/lexsrc/grammar.l"
 ECHO;
 	YY_BREAK
-#line 971 "./src/lex.yy.c"
+#line 972 "./src/lex.yy.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1933,7 +1934,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 140 "./src/lexsrc/grammar.l"
+#line 141 "./src/lexsrc/grammar.l"
 
 
 int yy_swap_buffer(char* filename){

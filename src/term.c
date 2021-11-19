@@ -126,6 +126,18 @@ void ap_print(char* msg){
     printf("%s\n",msg);
 }
 
+void ap_libs(){
+    linked_lib_t* aux=linked_libs;
+    if(aux==NULL){
+        handle_generic_info("Non hai librerias cargadas");
+        return;
+    }
+    printf("Liberias cargadas:\n");
+    do{
+        printf("\t-%s\n",aux->name);
+        aux=aux->next;
+    }while(aux!=NULL);
+}
 
 
 void ap_help(){

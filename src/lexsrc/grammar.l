@@ -82,18 +82,19 @@ comment                     "#"[^\n]*
 };
 
 [a-zA-Z]+[a-zA-Z0-9_]*      {
-	double (*fptr)();
-	linked_lib_t* aux=get_linked_libs();
-	while(aux && aux->next!=NULL){
-		fptr=dlsym(aux->current, yytext);
-		if(fptr){
-			if(add_ext_fun(yytext,fptr)!=-1){
-				//handle_generic_success("Añadida a función %s a táboa de símbolos, cargada dende: %s",yytext,aux->name);
+
+	if(!keyword_exist_ts(yytext)){
+		double (*fptr)();
+		linked_lib_t* aux=get_linked_libs();
+		while(aux!=NULL){
+			fptr=dlsym(aux->current, yytext);
+			if(fptr && (add_ext_fun(yytext,fptr)!=-1)){
 				break;
 			}
-		}
-		aux=aux->next;
+			aux=aux->next;
+		};
 	}
+	
 
 	yylval.str=strdup(yytext);
 	yylval.record=get_lexcomp(yytext);
@@ -101,7 +102,7 @@ comment                     "#"[^\n]*
 };
 
 
-
+{comment}    	;     
 {addeq}           { return ADDEQ; }
 {subeq}           { return SUBEQ; }
 {muleq}           { return MULEQ; }
@@ -109,14 +110,14 @@ comment                     "#"[^\n]*
 {poweq}           { return POWEQ; }
 {modeq}           { return MODEQ; }
 
-[-+()=/*^]        { return *yytext; }
+[-+()=/*^%]        { return *yytext; }
 
 
 [\n]     		  { return *yytext;  }
 
 [ \t]   		;      
 [\r]   			;      
-{comment}   	;      
+ 
 
 .   { 
 		return *yytext;

@@ -6,8 +6,6 @@ words.txt
 .vscode/
 .idea/
 
-*.yy.c
-*.tab.c
-
-*.tab.h
-*.yy.h
+src/lex.yy.c
+src/y.tab.c
+include/y.tab.h

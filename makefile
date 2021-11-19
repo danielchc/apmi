@@ -2,9 +2,13 @@ SRC_DIR := src
 OBJ_DIR := obj
 BIN_DIR := bin
 
-LEX_FILE := ./src/lex.yy.c
+
+LEX_FILE :=./src/lexsrc/grammar.l
+TAB_FILE :=./src/lexsrc/calc.y
+
+LEX_C := ./src/lex.yy.c
 LEX_HEADER := ./include/lex.yy.h
-TAB_FILE := ./src/y.tab.c
+TAB_C := ./src/y.tab.c
 TAB_HEADER:= ./include/y.tab.h
 
 
@@ -23,9 +27,9 @@ LDLIBS   := -lm -ldl
 all: lex bison $(EXE) 
 
 lex:
-	flex -o $(LEX_FILE) --header-file=$(LEX_HEADER) ./src/lexsrc/grammar.l 
+	flex -o $(LEX_C) --header-file=$(LEX_HEADER)  $(LEX_FILE)
 bison:
-	bison -y -o $(TAB_FILE) --defines=$(TAB_HEADER) ./src/lexsrc/calc.y
+	bison -y -o $(TAB_C) --defines=$(TAB_HEADER) $(TAB_FILE)
 
 $(EXE): $(OBJ) | $(BIN_DIR)
 	$(CC) $^ $(LDLIBS) -o $@

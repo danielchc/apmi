@@ -46,7 +46,7 @@ void ap_workspace(){
 			}
 		}
 	}
-    if(sym_count==0)printf("Non hai variables almacenadas no workspace\n");
+    if(sym_count==0)handle_generic_info("Non hai variables almacenadas no workspace");
 }
 
 
@@ -142,17 +142,17 @@ void ap_libs(){
 
 void ap_help(){
     printf("APMI - Interpete Matemático Axuda\n");
-    printf("Nota: As variables non inicializadas asumese que teñen de valor 0.0\n");
     printf("Comandos dispoñibles:\n");
     printf("\tclear()\t\t\tBorra as variables do espazo de traballo\n");
     printf("\tcls()\t\t\tLimpia a pantalla\n");
     printf("\techo(\"on\"/\"off\")\tActiva ou desactiva o imprimir por pantalla\n");
-    printf("\tprint()\t\t\tImprime un string\n");
     printf("\texit()\t\t\tCerra a terminal (alias quit())\n");
     printf("\thelp()\t\t\tMostra esta axuda\n");
     printf("\timport(\"libreria\")\tCarga unha liberia externa, recibe como argumento a ruta da libreria\n");
+    printf("\tlibs()\t\tMostra as librerías cargadas\n");
     printf("\tload(\"arquivo\")\t\tCarga unha script matemático\n");
     printf("\toutmode(\"sci\"/\"dec\")\t\t\tFormato da salida: sci->formato cientifico;dec-> formato decimal\n");
+    printf("\tprint()\t\t\tImprime un string\n");
     printf("\tquit()\t\t\tCerra a terminal (alias exit())\n");
     printf("\tworkspace()\t\tMostra as variables do espazo de traballo\n");
     printf("Funcións matemáticas dispoñibles:\n");
@@ -186,6 +186,8 @@ void ap_help(){
     printf("\t(a)\t\t\tParentesis\n");
     printf("\ta=b\t\t\tAsignación\n");
     printf("\ta[+ - * / %%]=b\t\tAsignación con operador\n\n");
+    handle_generic_warning("Nota: As variables non inicializadas asumese que teñen de valor 0.0");
+
 }
 
 void clear_libs(){

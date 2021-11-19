@@ -1,12 +1,20 @@
 #Mostro o espacio de traballo
+print("Mostro o espazo de traballo")
 workspace()
 #Borro a taboa de simbolos
+print("Borro o espazo de traballo")
 clear()
 #Mostro o espacio de traballo
+print("Mostro o espazo de traballo logo de borrar todo")
 workspace()
+#Mostro as librerias cargadas, como fixen clear non deberia aparecer ningunha
+print("Mostro as liberias cargadas")
+libs()
+print("Cambio a modo decimal")
 outmode("dec")
 10e10
 #Cambio a modo cientifico
+print("Cambio a modo cientifico")
 outmode("sci")
 10e10
 tan(90)

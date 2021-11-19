@@ -193,13 +193,13 @@ void ap_outmode(char* mode){
 /*
 	ap_print
 		- corresponde ao comando print() da terminal
-		- imprime un texto por pantalla
+		- imprime un texto por pantalla en azul
 	params:
 		- char* msg: texto a imprimir por pantalla
 */
 
 void ap_print(char* msg){
-	printf("%s\n",msg);
+	printf("\033[0;36m%s\033[0m\n",msg);
 }
 
 /*

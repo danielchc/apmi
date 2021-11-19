@@ -10,6 +10,7 @@ setwd("examples")
 #Importo dende o directorio actual
 import("lm2.so")
 import("lm3.so")
+libs()
 workspace()
 
 #Emprego funcións das liberias

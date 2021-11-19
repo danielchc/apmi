@@ -59,6 +59,11 @@ Funcións matemáticas dispoñibles:
       a=b               Asignación
       a[+ - * / %]=b    Asignación con operador
 
+## Funcionalidade xeral
+
+- O intérprete asume calquer identificador como variable ainda que non esté definido, e decir se empregamos a variable `foo` no intérprete sen previamente definila, asumirase que dita variable ten o valor 0.0.
+- O intérprete asume calquer número introducido como un número decimal.
+
 ## Carga de ficheiros
 Para cargar arquivos podemos empregar a función `load("ficheiro")`, pasando como argumento o ficheiro que queremos abrir, podendo cargar ata 10 ficheiros de maneira recursiva. Podemos empregar a función `setwd("directorio")` para cambiar de directorio de traballo, o establecer unha ruta absoluta ou relativo o directorio de traballo da terminal.
 
@@ -77,7 +82,7 @@ As funcións definidas no arquivo importado deben recibir como argumento un úni
 Mencionar que non é posible executar unha función dunha librería que teña o mesmo o mesmo nome que unha constante/función ou unha variable da táboa de símbolos. Sempre prevalecerán os símbolos que a existen respecto os novos.
 
 ## Conxunto de exemplos 
-Na carpeta `examples` atopase un exemplo (comentado nos propios ficheiros, no cal se mostra un pouco as funcionalidades implementadas no programa.
+Na carpeta `examples` atopase un exemplo, no cal se mostra un pouco as funcionalidades implementadas no programa. A súas funcionalidade está comentadas nos propios ficheiros e imprense addicionalmente mensaxes en pantalla coa función `print()` de cor azul.
 
 Este exemplo poñera a proba o uso de un par de liberías(cuxo código tamén se pode consultar nesta carpeta), e o uso de gran parte dos comandos implementados no intérprete.
 

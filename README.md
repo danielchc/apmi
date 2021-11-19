@@ -92,7 +92,7 @@ Para executar este exemplo temos dúas opcións:
 
     ./bin/apmi ./examples/exemplo.pa
 
-#### Dende o intérprete empregando a función load()
+#### Dende o intérprete empregando a función load():
 
      apmi> load("./examples/exemplo.pa") 
 

@@ -5,3 +5,9 @@ obj/
 words.txt
 .vscode/
 .idea/
+
+*.yy.c
+*.tab.c
+
+*.tab.h
+*.yy.h

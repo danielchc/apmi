@@ -854,19 +854,22 @@ YY_RULE_SETUP
 case 9:
 YY_RULE_SETUP
 #line 79 "./src/lexsrc/grammar.l"
-{  
+{ 
+	/* Converte calquer número a un flotante */
 	yylval.num = atof(yytext);
 	return NUMBER;
 };
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 84 "./src/lexsrc/grammar.l"
+#line 85 "./src/lexsrc/grammar.l"
 {
-
+	//Se non existe o identificador na táboa de simbolos, buscase primeiro se existe nunha libreria
 	if(!keyword_exist_ts(yytext)){
 		double (*fptr)();
+		//Obteño a librerías que están cargadas
 		linked_lib_t* aux=get_linked_libs();
+		//Recorro as librerias e busco se existe algunha función co nome do símbolo introducido
 		while(aux!=NULL){
 			fptr=dlsym(aux->current, yytext);
 			if(fptr && (add_ext_fun(yytext,fptr)!=-1)){
@@ -876,7 +879,10 @@ YY_RULE_SETUP
 		};
 	}
 	
-
+	/*
+		Gardo a cadea de texto que vou empregar, e busco na táboa de símbolos o símbolo
+		se non existe creará un novo símbolo e asignaralle o valor 0.0
+	*/
 	yylval.str=strdup(yytext);
 	yylval.record=get_lexcomp(yytext);
 	return (yylval.record->value);
@@ -884,63 +890,63 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 105 "./src/lexsrc/grammar.l"
+#line 111 "./src/lexsrc/grammar.l"
 ;     
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 106 "./src/lexsrc/grammar.l"
+#line 112 "./src/lexsrc/grammar.l"
 { return ADDEQ; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 107 "./src/lexsrc/grammar.l"
+#line 113 "./src/lexsrc/grammar.l"
 { return SUBEQ; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 108 "./src/lexsrc/grammar.l"
+#line 114 "./src/lexsrc/grammar.l"
 { return MULEQ; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 109 "./src/lexsrc/grammar.l"
+#line 115 "./src/lexsrc/grammar.l"
 { return DIVEQ; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 110 "./src/lexsrc/grammar.l"
+#line 116 "./src/lexsrc/grammar.l"
 { return POWEQ; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 111 "./src/lexsrc/grammar.l"
+#line 117 "./src/lexsrc/grammar.l"
 { return MODEQ; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 113 "./src/lexsrc/grammar.l"
+#line 119 "./src/lexsrc/grammar.l"
 { return *yytext; }
 	YY_BREAK
 case 19:
 /* rule 19 can match eol */
 YY_RULE_SETUP
-#line 116 "./src/lexsrc/grammar.l"
+#line 122 "./src/lexsrc/grammar.l"
 { return *yytext;  }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 118 "./src/lexsrc/grammar.l"
-;      
+#line 125 "./src/lexsrc/grammar.l"
+;      /* Ignoro os saltos os retorno de carro, tabulacións e espacios */
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 119 "./src/lexsrc/grammar.l"
+#line 126 "./src/lexsrc/grammar.l"
 ;      
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 122 "./src/lexsrc/grammar.l"
+#line 129 "./src/lexsrc/grammar.l"
 { 
 		return *yytext;
 }
@@ -948,13 +954,15 @@ YY_RULE_SETUP
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(STRINGSIMPLE):
 case YY_STATE_EOF(STRINGDOUBLE):
-#line 127 "./src/lexsrc/grammar.l"
+#line 134 "./src/lexsrc/grammar.l"
 {
+	//Cando chego o final dun ficheiro cerro a ficheiro
 	fclose(yyin);
+	//Se non hai máis ficheiros que leer establezco a entrada a entrada estándar
 	if ( --include_stack_ptr < 0) {
 		yyin=stdin;
 		yyrestart(yyin);
-		return '\n';
+	//Se existe outro ficheiro cambio o buffer a dito ficheiro
 	} else {
 		yy_delete_buffer(YY_CURRENT_BUFFER);
 		yy_switch_to_buffer(include_stack[include_stack_ptr]);
@@ -965,10 +973,10 @@ case YY_STATE_EOF(STRINGDOUBLE):
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 141 "./src/lexsrc/grammar.l"
+#line 150 "./src/lexsrc/grammar.l"
 ECHO;
 	YY_BREAK
-#line 972 "./src/lex.yy.c"
+#line 980 "./src/lex.yy.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1934,15 +1942,21 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 141 "./src/lexsrc/grammar.l"
+#line 150 "./src/lexsrc/grammar.l"
 
 
 int yy_swap_buffer(char* filename){
-	if (include_stack_ptr >= MAX_INCLUDE_DEPTH) return -1;
+	//Se excedo o nivel de profundidad de carga de ficheiros devolvo erro
+	if (include_stack_ptr >= MAX_INCLUDE_DEPTH) 
+		return -1;
+	//Establezco o buffer siguiente co buffer actual para escribir o novo buffer no actual
     include_stack[include_stack_ptr++] = YY_CURRENT_BUFFER;
     FILE* f = fopen(filename, "r");
-	if (!f) return -2;
-    yyin=f;
+	//Se non existe o ficheiro devolvo erro
+	if (!f) 
+		return -2;
+	//Establezco o ficheiro como nova entrada
+	yyset_in(f);
     yy_switch_to_buffer(yy_create_buffer(yyin, YY_BUF_SIZE));
     BEGIN(INITIAL);
 	return 0;

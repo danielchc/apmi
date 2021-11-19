@@ -21,7 +21,7 @@
     double num;
     ts_record_t* record;
 }
-
+/* Establezco so simbolos permitidos */
 %token <num> NUMBER          
 %token <record> VAR CONST SYSFUN MATHFUN 
 %token <str> STRING
@@ -47,24 +47,29 @@ statement:
             }
             if(yyget_in()==stdin) prompt();
         }
+        /* Non se permite intentar asignar un valor a unha constante */
         | CONST '=' expression '\n'     { 
             yyerror("Non se pode asignar un valor a unha constante");
             if(yyget_in()==stdin) prompt();
 
         }        
+        /* Non se permite intentar asignar un valor a unha función do sistema */
         | SYSFUN '=' expression  '\n'     { 
             yyerror("Non se pode asignar un valor a unha función");
             if(yyget_in()==stdin) prompt();
             
         }        
+        /* Non se permite intentar asignar un valor a unha función matemática */
         | MATHFUN '=' expression  '\n'     { 
             yyerror("Non se pode asignar un valor a unha función");
             if(yyget_in()==stdin) prompt();
         }
+        /* Non se permite usar unha expresión nunha función do sistema */
         | SYSFUN '(' expression ')' '\n'      {
             yyerror("Non se pode usar unha variable nunha función do sistema");
             if(yyget_in()==stdin) prompt();
         }
+        /* Operadores +=, *=, -=, /=, e %=  */
         | VAR ADDEQ expression   '\n'    { 
             ($1)->attr_value+=$3;
             if(yyget_in()==stdin) prompt();
@@ -89,14 +94,17 @@ statement:
             ($1)->attr_value=fmod(($1)->attr_value,$3);
             if(yyget_in()==stdin) prompt();
         }
+        /* Operación de asignación,gardase na táboa de símbolos */
         | VAR '=' expression      '\n' { 
             ($1)->attr_value=$3;
             if(yyget_in()==stdin) prompt();
         }
+        /* Función do sistema que permite o paso de strings */
         | SYSFUN '(' STRING ')'  '\n'    {
             (($1)->fnctptr)($3);
             if(yyget_in()==stdin) prompt();
         }
+        /* Función do sistema sin parámetros */
         | SYSFUN '('')'   '\n'    {
             (($1)->fnctptr)();
             if(yyget_in()==stdin) prompt();

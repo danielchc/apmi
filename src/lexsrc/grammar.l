@@ -76,16 +76,19 @@ comment                     "#"[^\n]*
 }
 
 
-{decimal}|{integer}   {  
+{decimal}|{integer}   { 
+	/* Converte calquer número a un flotante */
 	yylval.num = atof(yytext);
 	return NUMBER;
 };
 
 [a-zA-Z]+[a-zA-Z0-9_]*      {
-
+	//Se non existe o identificador na táboa de simbolos, buscase primeiro se existe nunha libreria
 	if(!keyword_exist_ts(yytext)){
 		double (*fptr)();
+		//Obteño a librerías que están cargadas
 		linked_lib_t* aux=get_linked_libs();
+		//Recorro as librerias e busco se existe algunha función co nome do símbolo introducido
 		while(aux!=NULL){
 			fptr=dlsym(aux->current, yytext);
 			if(fptr && (add_ext_fun(yytext,fptr)!=-1)){
@@ -95,7 +98,10 @@ comment                     "#"[^\n]*
 		};
 	}
 	
-
+	/*
+		Gardo a cadea de texto que vou empregar, e busco na táboa de símbolos o símbolo
+		se non existe creará un novo símbolo e asignaralle o valor 0.0
+	*/
 	yylval.str=strdup(yytext);
 	yylval.record=get_lexcomp(yytext);
 	return (yylval.record->value);
@@ -115,7 +121,8 @@ comment                     "#"[^\n]*
 
 [\n]     		  { return *yytext;  }
 
-[ \t]   		;      
+
+[ \t]   		;      /* Ignoro os saltos os retorno de carro, tabulacións e espacios */
 [\r]   			;      
  
 
@@ -125,11 +132,13 @@ comment                     "#"[^\n]*
 
 
 <<EOF>> {
+	//Cando chego o final dun ficheiro cerro a ficheiro
 	fclose(yyin);
+	//Se non hai máis ficheiros que leer establezco a entrada a entrada estándar
 	if ( --include_stack_ptr < 0) {
 		yyin=stdin;
 		yyrestart(yyin);
-		return '\n';
+	//Se existe outro ficheiro cambio o buffer a dito ficheiro
 	} else {
 		yy_delete_buffer(YY_CURRENT_BUFFER);
 		yy_switch_to_buffer(include_stack[include_stack_ptr]);
@@ -141,11 +150,17 @@ comment                     "#"[^\n]*
 %%
 
 int yy_swap_buffer(char* filename){
-	if (include_stack_ptr >= MAX_INCLUDE_DEPTH) return -1;
+	//Se excedo o nivel de profundidad de carga de ficheiros devolvo erro
+	if (include_stack_ptr >= MAX_INCLUDE_DEPTH) 
+		return -1;
+	//Establezco o buffer siguiente co buffer actual para escribir o novo buffer no actual
     include_stack[include_stack_ptr++] = YY_CURRENT_BUFFER;
     FILE* f = fopen(filename, "r");
-	if (!f) return -2;
-    yyin=f;
+	//Se non existe o ficheiro devolvo erro
+	if (!f) 
+		return -2;
+	//Establezco o ficheiro como nova entrada
+	yyset_in(f);
     yy_switch_to_buffer(yy_create_buffer(yyin, YY_BUF_SIZE));
     BEGIN(INITIAL);
 	return 0;

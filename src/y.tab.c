@@ -518,10 +518,10 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    34,    34,    36,    40,    43,    50,    55,    60,    64,
-      68,    72,    76,    80,    84,    88,    92,    96,   100,   104,
-     109,   110,   111,   112,   113,   114,   115,   116,   117,   118,
-     127,   128
+       0,    34,    34,    36,    40,    43,    51,    57,    63,    68,
+      73,    77,    81,    85,    89,    93,    98,   103,   108,   112,
+     117,   118,   119,   120,   121,   122,   123,   124,   125,   126,
+     135,   136
 };
 #endif
 
@@ -1189,7 +1189,7 @@ yyreduce:
     break;
 
   case 6: /* statement: CONST '=' expression '\n'  */
-#line 50 "./src/lexsrc/calc.y"
+#line 51 "./src/lexsrc/calc.y"
                                         { 
             yyerror("Non se pode asignar un valor a unha constante");
             if(yyget_in()==stdin) prompt();
@@ -1199,7 +1199,7 @@ yyreduce:
     break;
 
   case 7: /* statement: SYSFUN '=' expression '\n'  */
-#line 55 "./src/lexsrc/calc.y"
+#line 57 "./src/lexsrc/calc.y"
                                           { 
             yyerror("Non se pode asignar un valor a unha función");
             if(yyget_in()==stdin) prompt();
@@ -1209,7 +1209,7 @@ yyreduce:
     break;
 
   case 8: /* statement: MATHFUN '=' expression '\n'  */
-#line 60 "./src/lexsrc/calc.y"
+#line 63 "./src/lexsrc/calc.y"
                                            { 
             yyerror("Non se pode asignar un valor a unha función");
             if(yyget_in()==stdin) prompt();
@@ -1218,7 +1218,7 @@ yyreduce:
     break;
 
   case 9: /* statement: SYSFUN '(' expression ')' '\n'  */
-#line 64 "./src/lexsrc/calc.y"
+#line 68 "./src/lexsrc/calc.y"
                                               {
             yyerror("Non se pode usar unha variable nunha función do sistema");
             if(yyget_in()==stdin) prompt();
@@ -1227,7 +1227,7 @@ yyreduce:
     break;
 
   case 10: /* statement: VAR ADDEQ expression '\n'  */
-#line 68 "./src/lexsrc/calc.y"
+#line 73 "./src/lexsrc/calc.y"
                                          { 
             ((yyvsp[-3].record))->attr_value+=(yyvsp[-1].num);
             if(yyget_in()==stdin) prompt();
@@ -1236,7 +1236,7 @@ yyreduce:
     break;
 
   case 11: /* statement: VAR SUBEQ expression '\n'  */
-#line 72 "./src/lexsrc/calc.y"
+#line 77 "./src/lexsrc/calc.y"
                                          { 
             ((yyvsp[-3].record))->attr_value-=(yyvsp[-1].num);
             if(yyget_in()==stdin) prompt();
@@ -1245,7 +1245,7 @@ yyreduce:
     break;
 
   case 12: /* statement: VAR MULEQ expression '\n'  */
-#line 76 "./src/lexsrc/calc.y"
+#line 81 "./src/lexsrc/calc.y"
                                          { 
             ((yyvsp[-3].record))->attr_value*=(yyvsp[-1].num);
             if(yyget_in()==stdin) prompt();
@@ -1254,7 +1254,7 @@ yyreduce:
     break;
 
   case 13: /* statement: VAR DIVEQ expression '\n'  */
-#line 80 "./src/lexsrc/calc.y"
+#line 85 "./src/lexsrc/calc.y"
                                          { 
             ((yyvsp[-3].record))->attr_value/=(yyvsp[-1].num);
             if(yyget_in()==stdin) prompt();
@@ -1263,7 +1263,7 @@ yyreduce:
     break;
 
   case 14: /* statement: VAR POWEQ expression '\n'  */
-#line 84 "./src/lexsrc/calc.y"
+#line 89 "./src/lexsrc/calc.y"
                                          { 
             ((yyvsp[-3].record))->attr_value=pow(((yyvsp[-3].record))->attr_value,(yyvsp[-1].num));
             if(yyget_in()==stdin) prompt();
@@ -1272,7 +1272,7 @@ yyreduce:
     break;
 
   case 15: /* statement: VAR MODEQ expression '\n'  */
-#line 88 "./src/lexsrc/calc.y"
+#line 93 "./src/lexsrc/calc.y"
                                          { 
             ((yyvsp[-3].record))->attr_value=fmod(((yyvsp[-3].record))->attr_value,(yyvsp[-1].num));
             if(yyget_in()==stdin) prompt();
@@ -1281,7 +1281,7 @@ yyreduce:
     break;
 
   case 16: /* statement: VAR '=' expression '\n'  */
-#line 92 "./src/lexsrc/calc.y"
+#line 98 "./src/lexsrc/calc.y"
                                        { 
             ((yyvsp[-3].record))->attr_value=(yyvsp[-1].num);
             if(yyget_in()==stdin) prompt();
@@ -1290,7 +1290,7 @@ yyreduce:
     break;
 
   case 17: /* statement: SYSFUN '(' STRING ')' '\n'  */
-#line 96 "./src/lexsrc/calc.y"
+#line 103 "./src/lexsrc/calc.y"
                                          {
             (((yyvsp[-4].record))->fnctptr)((yyvsp[-2].str));
             if(yyget_in()==stdin) prompt();
@@ -1299,7 +1299,7 @@ yyreduce:
     break;
 
   case 18: /* statement: SYSFUN '(' ')' '\n'  */
-#line 100 "./src/lexsrc/calc.y"
+#line 108 "./src/lexsrc/calc.y"
                                   {
             (((yyvsp[-3].record))->fnctptr)();
             if(yyget_in()==stdin) prompt();
@@ -1308,7 +1308,7 @@ yyreduce:
     break;
 
   case 19: /* statement: error '\n'  */
-#line 104 "./src/lexsrc/calc.y"
+#line 112 "./src/lexsrc/calc.y"
                     {
             if(yyget_in()==stdin) prompt();
         }
@@ -1316,55 +1316,55 @@ yyreduce:
     break;
 
   case 21: /* expression: CONST  */
-#line 110 "./src/lexsrc/calc.y"
+#line 118 "./src/lexsrc/calc.y"
                                         { (yyval.num)=((yyvsp[0].record))->attr_value; }
 #line 1322 "./src/y.tab.c"
     break;
 
   case 22: /* expression: VAR  */
-#line 111 "./src/lexsrc/calc.y"
+#line 119 "./src/lexsrc/calc.y"
                                         { (yyval.num)=((yyvsp[0].record))->attr_value; }
 #line 1328 "./src/y.tab.c"
     break;
 
   case 23: /* expression: MATHFUN '(' expression ')'  */
-#line 112 "./src/lexsrc/calc.y"
+#line 120 "./src/lexsrc/calc.y"
                                         {  (yyval.num) = ((yyvsp[-3].record)->mfnctptr)((yyvsp[-1].num)); }
 #line 1334 "./src/y.tab.c"
     break;
 
   case 24: /* expression: expression '+' expression  */
-#line 113 "./src/lexsrc/calc.y"
+#line 121 "./src/lexsrc/calc.y"
                                         { (yyval.num) = (yyvsp[-2].num) + (yyvsp[0].num); }
 #line 1340 "./src/y.tab.c"
     break;
 
   case 25: /* expression: expression '-' expression  */
-#line 114 "./src/lexsrc/calc.y"
+#line 122 "./src/lexsrc/calc.y"
                                         { (yyval.num) = (yyvsp[-2].num) - (yyvsp[0].num); }
 #line 1346 "./src/y.tab.c"
     break;
 
   case 26: /* expression: expression '*' expression  */
-#line 115 "./src/lexsrc/calc.y"
+#line 123 "./src/lexsrc/calc.y"
                                         { (yyval.num) = (yyvsp[-2].num) * (yyvsp[0].num); }
 #line 1352 "./src/y.tab.c"
     break;
 
   case 27: /* expression: expression '^' expression  */
-#line 116 "./src/lexsrc/calc.y"
+#line 124 "./src/lexsrc/calc.y"
                                         { (yyval.num) = pow((yyvsp[-2].num),(yyvsp[0].num)); }
 #line 1358 "./src/y.tab.c"
     break;
 
   case 28: /* expression: expression '%' expression  */
-#line 117 "./src/lexsrc/calc.y"
+#line 125 "./src/lexsrc/calc.y"
                                         { (yyval.num) = fmod((yyvsp[-2].num),(yyvsp[0].num)); }
 #line 1364 "./src/y.tab.c"
     break;
 
   case 29: /* expression: expression '/' expression  */
-#line 118 "./src/lexsrc/calc.y"
+#line 126 "./src/lexsrc/calc.y"
                                         {
             if ((yyvsp[0].num) == 0) {
                 yyerror("Non se pode dividir entre 0");
@@ -1378,13 +1378,13 @@ yyreduce:
     break;
 
   case 30: /* expression: '-' expression  */
-#line 127 "./src/lexsrc/calc.y"
+#line 135 "./src/lexsrc/calc.y"
                                         { (yyval.num) = -(yyvsp[0].num);}
 #line 1384 "./src/y.tab.c"
     break;
 
   case 31: /* expression: '(' expression ')'  */
-#line 128 "./src/lexsrc/calc.y"
+#line 136 "./src/lexsrc/calc.y"
                                         { (yyval.num) = (yyvsp[-1].num); }
 #line 1390 "./src/y.tab.c"
     break;
@@ -1584,7 +1584,7 @@ yyreturn:
   return yyresult;
 }
 
-#line 131 "./src/lexsrc/calc.y"
+#line 139 "./src/lexsrc/calc.y"
 
 
 void yyerror(char *s) {

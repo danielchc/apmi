@@ -516,12 +516,12 @@ static const yytype_int8 yytranslate[] =
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_uint8 yyrline[] =
+static const yytype_int8 yyrline[] =
 {
-       0,    34,    34,    36,    40,    43,    51,    57,    63,    68,
-      73,    77,    81,    85,    89,    93,    98,   103,   108,   112,
-     117,   118,   119,   120,   121,   122,   123,   124,   125,   126,
-     135,   136
+       0,    34,    34,    36,    42,    44,    51,    55,    59,    63,
+      67,    70,    73,    76,    79,    82,    86,    90,    94,    97,
+     101,   102,   103,   104,   105,   106,   107,   108,   109,   110,
+     119,   120
 };
 #endif
 
@@ -1168,203 +1168,193 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 4: /* statement: '\n'  */
-#line 40 "./src/lexsrc/calc.y"
-            {
-           if(yyget_in()==stdin) prompt();
+  case 3: /* program: program statement  */
+#line 36 "./src/lexsrc/calc.y"
+                         {
+            if(yyget_in()==stdin) prompt();
         }
 #line 1177 "./src/y.tab.c"
     break;
 
+  case 4: /* statement: '\n'  */
+#line 42 "./src/lexsrc/calc.y"
+            {
+        }
+#line 1184 "./src/y.tab.c"
+    break;
+
   case 5: /* statement: expression '\n'  */
-#line 43 "./src/lexsrc/calc.y"
+#line 44 "./src/lexsrc/calc.y"
                                             { 
             if(get_echo()) {
                 if(get_outmode()==DECIMAL) printf(">>> %.4f\n", (yyvsp[-1].num));
                 else if (get_outmode()==SCIENTIFIC) printf(">>> %.4g\n", (yyvsp[-1].num));
             }
-            if(yyget_in()==stdin) prompt();
         }
-#line 1189 "./src/y.tab.c"
+#line 1195 "./src/y.tab.c"
     break;
 
   case 6: /* statement: CONST '=' expression '\n'  */
 #line 51 "./src/lexsrc/calc.y"
                                         { 
             yyerror("Non se pode asignar un valor a unha constante");
-            if(yyget_in()==stdin) prompt();
-
         }
-#line 1199 "./src/y.tab.c"
+#line 1203 "./src/y.tab.c"
     break;
 
   case 7: /* statement: SYSFUN '=' expression '\n'  */
-#line 57 "./src/lexsrc/calc.y"
+#line 55 "./src/lexsrc/calc.y"
                                           { 
             yyerror("Non se pode asignar un valor a unha función");
-            if(yyget_in()==stdin) prompt();
-            
         }
-#line 1209 "./src/y.tab.c"
+#line 1211 "./src/y.tab.c"
     break;
 
   case 8: /* statement: MATHFUN '=' expression '\n'  */
-#line 63 "./src/lexsrc/calc.y"
+#line 59 "./src/lexsrc/calc.y"
                                            { 
             yyerror("Non se pode asignar un valor a unha función");
-            if(yyget_in()==stdin) prompt();
         }
-#line 1218 "./src/y.tab.c"
+#line 1219 "./src/y.tab.c"
     break;
 
   case 9: /* statement: SYSFUN '(' expression ')' '\n'  */
-#line 68 "./src/lexsrc/calc.y"
+#line 63 "./src/lexsrc/calc.y"
                                               {
             yyerror("Non se pode usar unha variable nunha función do sistema");
-            if(yyget_in()==stdin) prompt();
         }
 #line 1227 "./src/y.tab.c"
     break;
 
   case 10: /* statement: VAR ADDEQ expression '\n'  */
-#line 73 "./src/lexsrc/calc.y"
+#line 67 "./src/lexsrc/calc.y"
                                          { 
             ((yyvsp[-3].record))->attr_value+=(yyvsp[-1].num);
-            if(yyget_in()==stdin) prompt();
         }
-#line 1236 "./src/y.tab.c"
+#line 1235 "./src/y.tab.c"
     break;
 
   case 11: /* statement: VAR SUBEQ expression '\n'  */
-#line 77 "./src/lexsrc/calc.y"
+#line 70 "./src/lexsrc/calc.y"
                                          { 
             ((yyvsp[-3].record))->attr_value-=(yyvsp[-1].num);
-            if(yyget_in()==stdin) prompt();
         }
-#line 1245 "./src/y.tab.c"
+#line 1243 "./src/y.tab.c"
     break;
 
   case 12: /* statement: VAR MULEQ expression '\n'  */
-#line 81 "./src/lexsrc/calc.y"
+#line 73 "./src/lexsrc/calc.y"
                                          { 
             ((yyvsp[-3].record))->attr_value*=(yyvsp[-1].num);
-            if(yyget_in()==stdin) prompt();
         }
-#line 1254 "./src/y.tab.c"
+#line 1251 "./src/y.tab.c"
     break;
 
   case 13: /* statement: VAR DIVEQ expression '\n'  */
-#line 85 "./src/lexsrc/calc.y"
+#line 76 "./src/lexsrc/calc.y"
                                          { 
             ((yyvsp[-3].record))->attr_value/=(yyvsp[-1].num);
-            if(yyget_in()==stdin) prompt();
         }
-#line 1263 "./src/y.tab.c"
+#line 1259 "./src/y.tab.c"
     break;
 
   case 14: /* statement: VAR POWEQ expression '\n'  */
-#line 89 "./src/lexsrc/calc.y"
+#line 79 "./src/lexsrc/calc.y"
                                          { 
             ((yyvsp[-3].record))->attr_value=pow(((yyvsp[-3].record))->attr_value,(yyvsp[-1].num));
-            if(yyget_in()==stdin) prompt();
         }
-#line 1272 "./src/y.tab.c"
+#line 1267 "./src/y.tab.c"
     break;
 
   case 15: /* statement: VAR MODEQ expression '\n'  */
-#line 93 "./src/lexsrc/calc.y"
+#line 82 "./src/lexsrc/calc.y"
                                          { 
             ((yyvsp[-3].record))->attr_value=fmod(((yyvsp[-3].record))->attr_value,(yyvsp[-1].num));
-            if(yyget_in()==stdin) prompt();
         }
-#line 1281 "./src/y.tab.c"
+#line 1275 "./src/y.tab.c"
     break;
 
   case 16: /* statement: VAR '=' expression '\n'  */
-#line 98 "./src/lexsrc/calc.y"
+#line 86 "./src/lexsrc/calc.y"
                                        { 
             ((yyvsp[-3].record))->attr_value=(yyvsp[-1].num);
-            if(yyget_in()==stdin) prompt();
         }
-#line 1290 "./src/y.tab.c"
+#line 1283 "./src/y.tab.c"
     break;
 
   case 17: /* statement: SYSFUN '(' STRING ')' '\n'  */
-#line 103 "./src/lexsrc/calc.y"
+#line 90 "./src/lexsrc/calc.y"
                                          {
             (((yyvsp[-4].record))->fnctptr)((yyvsp[-2].str));
-            if(yyget_in()==stdin) prompt();
+        }
+#line 1291 "./src/y.tab.c"
+    break;
+
+  case 18: /* statement: SYSFUN '(' ')' '\n'  */
+#line 94 "./src/lexsrc/calc.y"
+                                  {
+            (((yyvsp[-3].record))->fnctptr)();
         }
 #line 1299 "./src/y.tab.c"
     break;
 
-  case 18: /* statement: SYSFUN '(' ')' '\n'  */
-#line 108 "./src/lexsrc/calc.y"
-                                  {
-            (((yyvsp[-3].record))->fnctptr)();
-            if(yyget_in()==stdin) prompt();
-        }
-#line 1308 "./src/y.tab.c"
-    break;
-
   case 19: /* statement: error '\n'  */
-#line 112 "./src/lexsrc/calc.y"
+#line 97 "./src/lexsrc/calc.y"
                     {
-            if(yyget_in()==stdin) prompt();
         }
-#line 1316 "./src/y.tab.c"
+#line 1306 "./src/y.tab.c"
     break;
 
   case 21: /* expression: CONST  */
-#line 118 "./src/lexsrc/calc.y"
+#line 102 "./src/lexsrc/calc.y"
                                         { (yyval.num)=((yyvsp[0].record))->attr_value; }
-#line 1322 "./src/y.tab.c"
+#line 1312 "./src/y.tab.c"
     break;
 
   case 22: /* expression: VAR  */
-#line 119 "./src/lexsrc/calc.y"
+#line 103 "./src/lexsrc/calc.y"
                                         { (yyval.num)=((yyvsp[0].record))->attr_value; }
-#line 1328 "./src/y.tab.c"
+#line 1318 "./src/y.tab.c"
     break;
 
   case 23: /* expression: MATHFUN '(' expression ')'  */
-#line 120 "./src/lexsrc/calc.y"
+#line 104 "./src/lexsrc/calc.y"
                                         {  (yyval.num) = ((yyvsp[-3].record)->mfnctptr)((yyvsp[-1].num)); }
-#line 1334 "./src/y.tab.c"
+#line 1324 "./src/y.tab.c"
     break;
 
   case 24: /* expression: expression '+' expression  */
-#line 121 "./src/lexsrc/calc.y"
+#line 105 "./src/lexsrc/calc.y"
                                         { (yyval.num) = (yyvsp[-2].num) + (yyvsp[0].num); }
-#line 1340 "./src/y.tab.c"
+#line 1330 "./src/y.tab.c"
     break;
 
   case 25: /* expression: expression '-' expression  */
-#line 122 "./src/lexsrc/calc.y"
+#line 106 "./src/lexsrc/calc.y"
                                         { (yyval.num) = (yyvsp[-2].num) - (yyvsp[0].num); }
-#line 1346 "./src/y.tab.c"
+#line 1336 "./src/y.tab.c"
     break;
 
   case 26: /* expression: expression '*' expression  */
-#line 123 "./src/lexsrc/calc.y"
+#line 107 "./src/lexsrc/calc.y"
                                         { (yyval.num) = (yyvsp[-2].num) * (yyvsp[0].num); }
-#line 1352 "./src/y.tab.c"
+#line 1342 "./src/y.tab.c"
     break;
 
   case 27: /* expression: expression '^' expression  */
-#line 124 "./src/lexsrc/calc.y"
+#line 108 "./src/lexsrc/calc.y"
                                         { (yyval.num) = pow((yyvsp[-2].num),(yyvsp[0].num)); }
-#line 1358 "./src/y.tab.c"
+#line 1348 "./src/y.tab.c"
     break;
 
   case 28: /* expression: expression '%' expression  */
-#line 125 "./src/lexsrc/calc.y"
+#line 109 "./src/lexsrc/calc.y"
                                         { (yyval.num) = fmod((yyvsp[-2].num),(yyvsp[0].num)); }
-#line 1364 "./src/y.tab.c"
+#line 1354 "./src/y.tab.c"
     break;
 
   case 29: /* expression: expression '/' expression  */
-#line 126 "./src/lexsrc/calc.y"
+#line 110 "./src/lexsrc/calc.y"
                                         {
             if ((yyvsp[0].num) == 0) {
                 yyerror("Non se pode dividir entre 0");
@@ -1374,23 +1364,23 @@ yyreduce:
             }
                 
         }
-#line 1378 "./src/y.tab.c"
+#line 1368 "./src/y.tab.c"
     break;
 
   case 30: /* expression: '-' expression  */
-#line 135 "./src/lexsrc/calc.y"
+#line 119 "./src/lexsrc/calc.y"
                                         { (yyval.num) = -(yyvsp[0].num);}
-#line 1384 "./src/y.tab.c"
+#line 1374 "./src/y.tab.c"
     break;
 
   case 31: /* expression: '(' expression ')'  */
-#line 136 "./src/lexsrc/calc.y"
+#line 120 "./src/lexsrc/calc.y"
                                         { (yyval.num) = (yyvsp[-1].num); }
-#line 1390 "./src/y.tab.c"
+#line 1380 "./src/y.tab.c"
     break;
 
 
-#line 1394 "./src/y.tab.c"
+#line 1384 "./src/y.tab.c"
 
       default: break;
     }
@@ -1584,7 +1574,7 @@ yyreturn:
   return yyresult;
 }
 
-#line 139 "./src/lexsrc/calc.y"
+#line 123 "./src/lexsrc/calc.y"
 
 
 void yyerror(char *s) {

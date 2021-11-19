@@ -24,7 +24,7 @@ void prompt(){
 void ap_exit(){
 	clear_libs();
 	delete_ts();
-	printf("Adiós!\n");
+	printf("Saíndo...\n");
 	exit(0);
 }
 

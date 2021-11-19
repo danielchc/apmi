@@ -33,84 +33,68 @@
 
 program:
         |
-        program statement
+        program statement{
+            if(yyget_in()==stdin) prompt();
+        }
         ;
 
 statement:
         '\n'{
-           if(yyget_in()==stdin) prompt();
         }
         | expression  '\n'                  { 
             if(get_echo()) {
                 if(get_outmode()==DECIMAL) printf(">>> %.4f\n", $1);
                 else if (get_outmode()==SCIENTIFIC) printf(">>> %.4g\n", $1);
             }
-            if(yyget_in()==stdin) prompt();
         }
         /* Non se permite intentar asignar un valor a unha constante */
         | CONST '=' expression '\n'     { 
             yyerror("Non se pode asignar un valor a unha constante");
-            if(yyget_in()==stdin) prompt();
-
         }        
         /* Non se permite intentar asignar un valor a unha función do sistema */
         | SYSFUN '=' expression  '\n'     { 
             yyerror("Non se pode asignar un valor a unha función");
-            if(yyget_in()==stdin) prompt();
-            
         }        
         /* Non se permite intentar asignar un valor a unha función matemática */
         | MATHFUN '=' expression  '\n'     { 
             yyerror("Non se pode asignar un valor a unha función");
-            if(yyget_in()==stdin) prompt();
         }
         /* Non se permite usar unha expresión nunha función do sistema */
         | SYSFUN '(' expression ')' '\n'      {
             yyerror("Non se pode usar unha variable nunha función do sistema");
-            if(yyget_in()==stdin) prompt();
         }
         /* Operadores +=, *=, -=, /=, e %=  */
         | VAR ADDEQ expression   '\n'    { 
             ($1)->attr_value+=$3;
-            if(yyget_in()==stdin) prompt();
         }        
         | VAR SUBEQ expression   '\n'    { 
             ($1)->attr_value-=$3;
-            if(yyget_in()==stdin) prompt();
         }        
         | VAR MULEQ expression   '\n'    { 
             ($1)->attr_value*=$3;
-            if(yyget_in()==stdin) prompt();
         }        
         | VAR DIVEQ expression   '\n'    { 
             ($1)->attr_value/=$3;
-            if(yyget_in()==stdin) prompt();
         }
         | VAR POWEQ expression    '\n'   { 
             ($1)->attr_value=pow(($1)->attr_value,$3);
-            if(yyget_in()==stdin) prompt();
         }        
         | VAR MODEQ expression    '\n'   { 
             ($1)->attr_value=fmod(($1)->attr_value,$3);
-            if(yyget_in()==stdin) prompt();
         }
         /* Operación de asignación,gardase na táboa de símbolos */
         | VAR '=' expression      '\n' { 
             ($1)->attr_value=$3;
-            if(yyget_in()==stdin) prompt();
         }
         /* Función do sistema que permite o paso de strings */
         | SYSFUN '(' STRING ')'  '\n'    {
             (($1)->fnctptr)($3);
-            if(yyget_in()==stdin) prompt();
         }
         /* Función do sistema sin parámetros */
         | SYSFUN '('')'   '\n'    {
             (($1)->fnctptr)();
-            if(yyget_in()==stdin) prompt();
         }
         | error '\n'{
-            if(yyget_in()==stdin) prompt();
         }
         ;
 expression:

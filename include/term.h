@@ -14,6 +14,7 @@ typedef enum {
 	SCIENTIFIC
 } term_out_t;
 
+//Estructura onde se gardan os datos das librerías
 struct linked_lib_s;
 typedef struct linked_lib_s{
 	void* current;

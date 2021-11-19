@@ -138,7 +138,7 @@ void ap_help(){
     printf("\tprint()\t\t\tImprime un string\n");
     printf("\texit()\t\t\tCerra a terminal (alias quit())\n");
     printf("\thelp()\t\t\tMostra esta axuda\n");
-    printf("\timport(\"libreria\")\tCarga unha liberia externa, recibe como argumento a ruta absoluta do ficheiro\n");
+    printf("\timport(\"libreria\")\tCarga unha liberia externa, recibe como argumento a ruta da libreria\n");
     printf("\tload(\"arquivo\")\t\tCarga unha script matemático\n");
     printf("\toutmode(\"sci\"/\"dec\")\t\t\tFormato da salida: sci->formato cientifico;dec-> formato decimal\n");
     printf("\tquit()\t\t\tCerra a terminal (alias exit())\n");

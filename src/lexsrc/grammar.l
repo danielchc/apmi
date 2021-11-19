@@ -14,7 +14,6 @@
 %}
 %x STRINGSIMPLE
 %x STRINGDOUBLE
-comment                     "#"[^\n]*
 digit                       ([0-9]_?)+
 exp                         [eE][+-]?{digit}+
 integer                     {digit}{exp}?
@@ -24,8 +23,10 @@ subeq						"-="
 muleq						"*="		
 diveq						"/="
 poweq						"^="
+modeq						"%="
 simplequote                 "\'"
 doublequote                  "\""
+comment                     "#"[^\n]*
 %%
 
 
@@ -106,6 +107,7 @@ doublequote                  "\""
 {muleq}           { return MULEQ; }
 {diveq}           { return DIVEQ; }
 {poweq}           { return POWEQ; }
+{modeq}           { return MODEQ; }
 
 [-+()=/*^]        { return *yytext; }
 

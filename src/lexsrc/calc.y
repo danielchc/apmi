@@ -26,7 +26,7 @@
 %token <record> VAR CONST SYSFUN MATHFUN 
 %token <str> STRING
 
-%token ADDEQ SUBEQ MULEQ DIVEQ POWEQ;
+%token ADDEQ SUBEQ MULEQ DIVEQ POWEQ MODEQ;
 %type <num> expression
 
 %%
@@ -84,6 +84,10 @@ statement:
         | VAR POWEQ expression    '\n'   { 
             ($1)->attr_value=pow(($1)->attr_value,$3);
             if(yyget_in()==stdin) prompt();
+        }        
+        | VAR MODEQ expression    '\n'   { 
+            ($1)->attr_value=fmod(($1)->attr_value,$3);
+            if(yyget_in()==stdin) prompt();
         }
         | VAR '=' expression      '\n' { 
             ($1)->attr_value=$3;
@@ -110,6 +114,7 @@ expression:
         | expression '-' expression     { $$ = $1 - $3; }
         | expression '*' expression     { $$ = $1 * $3; }
         | expression '^' expression     { $$ = pow($1,$3); }
+        | expression '%' expression     { $$ = fmod($1,$3); }
         | expression '/' expression     {
             if ($3 == 0) {
                 yyerror("Non se pode dividir entre 0");

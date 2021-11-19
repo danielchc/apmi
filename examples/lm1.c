@@ -16,10 +16,3 @@ double fibonacci(double num){
 
     return fibor;
 }
-
-double a(double n) {
-	return n*1;
-}
-double b(double n) {
-	return n*2;
-}

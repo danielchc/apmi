@@ -263,10 +263,10 @@ void ap_help(){
 	printf("\tgetwd()\t\t\tObter o directorio de traballo actual\n");
 	printf("\thelp()\t\t\tMostra esta axuda\n");
 	printf("\timport(\"libreria\")\tCarga unha liberia externa, recibe como argumento a ruta da libreria\n");
-	printf("\tlibs()\t\tMostra as librerías cargadas\n");
-	printf("\tload(\"arquivo\")\t\tCarga unha script matemático\n");
-	printf("\tsetwd(\"directorio\")\t\t\tCambiar directorio de traballo actual\n");
-	printf("\toutmode(\"sci\"/\"dec\")\t\t\tFormato da salida: sci->formato cientifico;dec-> formato decimal\n");
+	printf("\tlibs()\t\t\tMostra as librerías cargadas\n");
+	printf("\tload(\"script\")\t\tCarga unha script matemático\n");
+	printf("\tsetwd(\"dir\")\t\tCambiar directorio de traballo actual\n");
+	printf("\toutmode(\"sci\"/\"dec\")\tFormato da salida: sci->formato cientifico;dec-> formato decimal\n");
 	printf("\tprint()\t\t\tImprime un string\n");
 	printf("\tquit()\t\t\tCerra a terminal (alias exit())\n");
 	printf("\tworkspace()\t\tMostra as variables do espazo de traballo\n");

@@ -10,4 +10,4 @@ var3^2
 
 
 #Cargo outro script
-load("./examples/exemplo3.pa")
+load("exemplo3.pa")

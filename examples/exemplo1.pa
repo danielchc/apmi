@@ -1,9 +1,15 @@
 help()
 
+
 #Cargo as liberias
 import("./examples/lm1.so")
-import("./examples/lm2.so")
-import("./examples/lm3.so")
+
+#Establezco o directorio de traballo en examples
+setwd("examples")
+
+#Importo dende o directorio actual
+import("lm2.so")
+import("lm3.so")
 workspace()
 
 #Emprego funcións das liberias
@@ -15,4 +21,4 @@ d(90)
 
 workspace()
 #Cargo outro script
-#load("./examples/exemplo2.pa")
+load("exemplo2.pa")

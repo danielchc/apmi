@@ -34,6 +34,8 @@ void ap_import(char* filename);
 void ap_print(char* msg);
 void ap_outmode(char* mode);
 void ap_libs();
+void ap_getwd();
+void ap_setwd(char * path);
 int get_echo();
 void clear_libs();
 term_out_t get_outmode();

@@ -139,6 +139,21 @@ void ap_libs(){
     }while(aux!=NULL);
 }
 
+void ap_getwd(){
+    char cwd[PATH_MAX];
+    if (getcwd(cwd, sizeof(cwd)) != NULL) {
+        handle_generic_info("Directorio actual de traballo %s",cwd);
+    }
+}
+
+void ap_setwd(char * path){
+    if(chdir(path)!=0){
+        handle_generic_error("Non foi posible de cambiar o directorio %s",path);
+        return;
+    }
+    ap_getwd();
+}
+
 
 void ap_help(){
     printf("APMI - Interpete Matemático Axuda\n");
@@ -147,10 +162,12 @@ void ap_help(){
     printf("\tcls()\t\t\tLimpia a pantalla\n");
     printf("\techo(\"on\"/\"off\")\tActiva ou desactiva o imprimir por pantalla\n");
     printf("\texit()\t\t\tCerra a terminal (alias quit())\n");
+    printf("\tgetwd()\t\t\tObter o directorio de traballo actual\n");
     printf("\thelp()\t\t\tMostra esta axuda\n");
     printf("\timport(\"libreria\")\tCarga unha liberia externa, recibe como argumento a ruta da libreria\n");
     printf("\tlibs()\t\tMostra as librerías cargadas\n");
     printf("\tload(\"arquivo\")\t\tCarga unha script matemático\n");
+    printf("\tsetwd(\"directorio\")\t\t\tCambiar directorio de traballo actual\n");
     printf("\toutmode(\"sci\"/\"dec\")\t\t\tFormato da salida: sci->formato cientifico;dec-> formato decimal\n");
     printf("\tprint()\t\t\tImprime un string\n");
     printf("\tquit()\t\t\tCerra a terminal (alias exit())\n");
@@ -186,7 +203,7 @@ void ap_help(){
     printf("\t(a)\t\t\tParentesis\n");
     printf("\ta=b\t\t\tAsignación\n");
     printf("\ta[+ - * / %%]=b\t\tAsignación con operador\n\n");
-    handle_generic_warning("Nota: As variables non inicializadas asumese que teñen de valor 0.0");
+    handle_generic_warning("As variables non inicializadas asumese que teñen de valor 0.0");
 
 }
 

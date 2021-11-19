@@ -17,7 +17,9 @@ sys_fun_t sysfun[]={
 	{"echo",ap_echo},
 	{"outmode",ap_outmode},
 	{"print",ap_print},
-	{"libs",ap_libs}
+	{"libs",ap_libs},
+	{"getwd",ap_getwd},
+	{"setwd",ap_setwd}
 };
 
 const_t consts[]={

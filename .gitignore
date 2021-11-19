@@ -1,11 +1,5 @@
 *.o
-ejecutable
 bin/
 obj/
-words.txt
 .vscode/
 .idea/
-
-src/lex.yy.c
-src/y.tab.c
-include/y.tab.h

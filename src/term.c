@@ -191,7 +191,7 @@ void ap_help(){
 void clear_libs(){
     if(linked_libs!=NULL){
         linked_lib_t* aux=linked_libs;
-        while(aux->next!=NULL){
+        while(aux!=NULL){
             dlclose(aux->current);
             aux=aux->next;
             free(linked_libs);

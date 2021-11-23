@@ -115,7 +115,7 @@ void ap_import(char* filename){
 
 	//Intenta usar unha ruta relativa o argumento pasado non comeza por "/"
 	if(filename[0]!='/'){
-		if (getcwd(cwd, sizeof(cwd)) != NULL) {
+		if (getcwd(cwd, sizeof(cwd))) {
 			strcat(cwd,"/");
 			filename=strcat(cwd,filename);
 		}
@@ -133,14 +133,14 @@ void ap_import(char* filename){
 		-Se non existe a lista creaa
 		-Se existe engadea o final
 	*/
-	if(linked_libs==NULL){
+	if(!linked_libs){
 		linked_libs=malloc(sizeof(linked_lib_t));
 		linked_libs->next=NULL;
 		linked_libs->current=current_lib;
 		linked_libs->name=strdup(filename);
 	}else{
 		linked_lib_t* aux=linked_libs;
-		while(aux->next!=NULL){
+		while(aux->next){
 			aux=aux->next;
 		}
 		aux->next=malloc(sizeof(linked_lib_t));
@@ -209,7 +209,7 @@ void ap_print(char* msg){
 */
 void ap_libs(){
 	linked_lib_t* aux=linked_libs;
-	if(aux==NULL){
+	if(!aux){
 		handle_generic_info("Non hai librerías cargadas");
 		return;
 	}
@@ -217,7 +217,7 @@ void ap_libs(){
 	do{
 		printf("\t-%s\n",aux->name);
 		aux=aux->next;
-	}while(aux!=NULL);
+	}while(aux);
 }
 
 /*
@@ -227,7 +227,7 @@ void ap_libs(){
 */
 void ap_getwd(){
 	char cwd[PATH_MAX];
-	if (getcwd(cwd, sizeof(cwd)) != NULL) {
+	if (getcwd(cwd, sizeof(cwd))) {
 		handle_generic_info("Directorio actual de traballo %s",cwd);
 	}
 }
@@ -309,9 +309,9 @@ void ap_help(){
 		borra a lista enlazada de liberías
 */
 void clear_libs(){
-	if(linked_libs!=NULL){
+	if(linked_libs){
 		linked_lib_t* aux=linked_libs;
-		while(aux!=NULL){
+		while(aux){
 			dlclose(aux->current);
 			aux=aux->next;
 			free(linked_libs);
